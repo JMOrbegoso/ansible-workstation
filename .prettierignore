@@ -1,0 +1,5 @@
+# cloud init file
+cloud-init
+
+# Ansible secrets file
+secrets.yaml
