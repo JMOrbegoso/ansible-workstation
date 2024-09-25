@@ -1,0 +1,21 @@
+---
+- name: 'Install Flatpak required packages using APT'
+  ansible.builtin.apt:
+    name: '{{ package }}'
+    state: present
+    install_recommends: false
+  loop: '{{ flatpak_required_packages }}'
+  loop_control:
+    loop_var: 'package'
+
+- name: 'Install Flatpak using APT'
+  ansible.builtin.apt:
+    name: 'flatpak'
+    state: present
+    install_recommends: false
+
+- name: 'Add Flathub repository support in Flatpak'
+  community.general.flatpak_remote:
+    name: 'flathub'
+    state: present
+    flatpakrepo_url: '{{ flathub_repository_url }}'

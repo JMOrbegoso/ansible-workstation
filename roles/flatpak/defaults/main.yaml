@@ -1,0 +1,5 @@
+flatpak_required_packages:
+  - 'xdg-desktop-portal'
+  - 'xdg-desktop-portal-gtk'
+
+flathub_repository_url: 'https://dl.flathub.org/repo/flathub.flatpakrepo'
