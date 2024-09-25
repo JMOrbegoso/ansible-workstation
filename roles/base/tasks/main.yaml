@@ -1,0 +1,20 @@
+---
+- name: 'Create ansible work directory'
+  ansible.builtin.file:
+    path: '{{ ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: 'Configure hostname'
+  ansible.builtin.include_tasks: 'hostname.yaml'
+
+- name: 'Configure timezone'
+  ansible.builtin.include_tasks: 'timezone.yaml'
+
+- name: 'Configure locale values'
+  ansible.builtin.include_tasks: 'locale.yaml'
+
+- name: 'Configure ssh'
+  ansible.builtin.include_tasks: 'ssh.yaml'

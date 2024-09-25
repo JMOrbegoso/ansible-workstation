@@ -1,0 +1,24 @@
+---
+- name: 'Ensure locale exists'
+  community.general.locale_gen:
+    name: '{{ locale }}.UTF-8'
+    state: present
+
+- name: 'Configure locale'
+  ansible.builtin.copy:
+    dest: '/etc/default/locale'
+    content: |
+      LANG={{ locale }}.UTF-8
+      LC_NUMERIC={{ locale }}.UTF-8
+      LC_TIME={{ locale }}.UTF-8
+      LC_MONETARY={{ locale }}.UTF-8
+      LC_PAPER={{ locale }}.UTF-8
+      LC_NAME={{ locale }}.UTF-8
+      LC_ADDRESS={{ locale }}.UTF-8
+      LC_TELEPHONE={{ locale }}.UTF-8
+      LC_MEASUREMENT={{ locale }}.UTF-8
+      LC_IDENTIFICATION={{ locale }}.UTF-8
+      LANGUAGE={{ locale }}
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
