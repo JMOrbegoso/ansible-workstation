@@ -1,1 +1,56 @@
 hostname: 'WORKSTATION'
+
+# APT role
+
+apt_sources_file_content: |
+  deb http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+  deb-src http://deb.debian.org/debian/ bookworm main contrib non-free non-free-firmware
+
+  deb http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+  deb-src http://security.debian.org/debian-security bookworm-security main contrib non-free non-free-firmware
+
+  # bookworm-updates, to get updates before a point release is made;
+  # see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html # _updates_and_backports
+  deb http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+  deb-src http://deb.debian.org/debian/ bookworm-updates main contrib non-free non-free-firmware
+
+apt_remove_packages:
+  - 'tasksel-data'
+  - 'tasksel'
+apt_install_base_packages:
+  - 'acl'
+  - 'apt-transport-https'
+  - 'build-essential'
+  - 'curl'
+  - 'git'
+  - 'gvfs-backends'
+  - 'libsecret-1-0'
+  - 'python3'
+  - 'smbclient'
+  - 'software-properties-common'
+apt_install_packages:
+  - 'at-spi2-core'
+  - 'btrfs-progs'
+  - 'certbot'
+  - 'cryptsetup'
+  - 'exfat-fuse'
+  - 'exfatprogs'
+  - 'exiftool'
+  - 'fzf'
+  - 'gnome-keyring'
+  - 'gpg-agent'
+  - 'htop'
+  - 'jq'
+  - 'lsof'
+  - 'ncal'
+  - 'pipx'
+  - 'policykit-1-gnome'
+  - 'python3-requests'
+  - 'rename'
+  - 'rsync'
+  - 'silversearcher-ag'
+  - 'sshpass'
+  - 'tree'
+  - 'unrar'
+  - 'unzip'
+  - 'xcvt'

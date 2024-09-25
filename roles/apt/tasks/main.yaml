@@ -1,0 +1,31 @@
+---
+- name: 'Remove APT packages'
+  ansible.builtin.include_tasks: 'remove-apt-package.yaml'
+  loop: '{{ apt_remove_packages }}'
+  loop_control:
+    loop_var: 'package'
+
+- name: 'Configure APT sources'
+  ansible.builtin.include_tasks: 'configure-apt-sources.yaml'
+
+- name: 'Install APT base packages'
+  ansible.builtin.include_tasks: 'install-apt-package.yaml'
+  loop: '{{ apt_install_base_packages }}'
+  loop_control:
+    loop_var: 'package'
+
+- name: 'Install Kernel Linux Headers using APT'
+  ansible.builtin.include_tasks: 'install-apt-package.yaml'
+  loop:
+    - 'linux-headers-{{ ansible_kernel }}'
+  loop_control:
+    loop_var: 'package'
+
+- name: 'Install APT packages'
+  ansible.builtin.include_tasks: 'install-apt-package.yaml'
+  loop: '{{ apt_install_packages }}'
+  loop_control:
+    loop_var: 'package'
+
+- name: 'Clean APT packages'
+  ansible.builtin.include_tasks: 'clean-apt-packages.yaml'

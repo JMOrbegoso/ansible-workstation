@@ -1,0 +1,5 @@
+---
+- name: 'Remove {{ package }} using APT'
+  ansible.builtin.apt:
+    name: '{{ package }}'
+    state: absent

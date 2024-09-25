@@ -1,0 +1,6 @@
+---
+- name: 'Install {{ package }} using APT'
+  ansible.builtin.apt:
+    name: '{{ package }}'
+    state: present
+    install_recommends: false

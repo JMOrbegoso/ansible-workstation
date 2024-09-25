@@ -1,0 +1,17 @@
+---
+- name: 'Update /etc/apt/sources.list file'
+  ansible.builtin.copy:
+    dest: '/etc/apt/sources.list'
+    content: |
+      {{ apt_sources_file_content }}
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Upgrade packages'
+  ansible.builtin.apt:
+    upgrade: safe
