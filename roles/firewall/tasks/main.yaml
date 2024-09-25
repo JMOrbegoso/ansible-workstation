@@ -1,0 +1,37 @@
+---
+- name: 'Install UFW'
+  ansible.builtin.apt:
+    name: 'ufw'
+    state: present
+    install_recommends: false
+
+- name: 'Reset UFW rules'
+  community.general.ufw:
+    state: reset
+
+- name: 'Configure UFW to allow outgoing traffic'
+  community.general.ufw:
+    direction: out
+    rule: allow
+
+- name: 'Configure UFW to allow incoming traffic from allowed ips & subnets'
+  community.general.ufw:
+    direction: in
+    rule: allow
+    from: '{{ allowed }}'
+  loop: '{{ firewall_allow_incoming }}'
+  loop_control:
+    loop_var: 'allowed'
+
+- name: 'Configure UFW to reject incoming traffic'
+  community.general.ufw:
+    direction: in
+    rule: reject
+
+- name: 'Enable UFW logging'
+  community.general.ufw:
+    logging: 'on'
+
+- name: 'Enable UFW'
+  community.general.ufw:
+    state: enabled
