@@ -1,0 +1,15 @@
+---
+- name: 'Check if /etc/default/grub exists'
+  ansible.builtin.stat:
+    path: '/etc/default/grub'
+  register: 'grub_file_stat'
+
+- name: 'Disable boot splash screen'
+  ansible.builtin.lineinfile:
+    path: '/etc/default/grub'
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT'
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT=""'
+    state: present
+  notify:
+    - 'update-grub-configuration'
+  when: 'grub_file_stat.stat.exists'
