@@ -1,0 +1,48 @@
+---
+- name: 'Create the user {{ user.name }}'
+  register: 'processed_user'
+  ansible.builtin.user:
+    name: '{{ user.name }}'
+    uid: '{{ user.uid }}'
+    password: "{{ user_passwords[user.name] | password_hash('sha512') }}"
+    update_password: on_create
+    create_home: true
+
+- name: 'Allow the {{ user.name }} user to sudo'
+  community.general.sudoers:
+    name: 'allow-{{ user.name }}-use-sudo'
+    state: present
+    user: '{{ user.name }}'
+    commands: 'ALL'
+    nopassword: false
+  when: 'user.has_sudo_privileges'
+
+- name: 'Allow the {{ user.name }} user to sudo'
+  community.general.sudoers:
+    name: 'allow-{{ user.name }}-use-sudo'
+    state: absent
+  when: 'not user.has_sudo_privileges'
+
+- name: 'Create user default directories'
+  ansible.builtin.file:
+    path: '{{ directory }}'
+    state: directory
+    owner: '{{ processed_user.uid }}'
+    group: '{{ processed_user.uid }}'
+    mode: '0770'
+  loop:
+    - '{{ processed_user.home }}/.config'
+    - '{{ processed_user.home }}/.config/autostart'
+    - '{{ processed_user.home }}/.local'
+    - '{{ processed_user.home }}/.local/share'
+  loop_control:
+    loop_var: 'directory'
+
+- name: 'Add SSH authorized keys'
+  ansible.posix.authorized_key:
+    user: '{{ processed_user.name }}'
+    state: present
+    key: '{{ ssh_authorized_key }}'
+  loop: '{{ user.ssh_authorized_keys }}'
+  loop_control:
+    loop_var: 'ssh_authorized_key'

@@ -1,0 +1,4 @@
+users: {}
+
+# This variable should be declarated in an ansible-vault
+user_passwords: {}

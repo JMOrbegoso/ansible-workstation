@@ -1,0 +1,5 @@
+- name: 'Process the users'
+  ansible.builtin.include_tasks: 'user.yaml'
+  loop: "{{ users | dict2items | map(attribute='value') | list }}"
+  loop_control:
+    loop_var: 'user'

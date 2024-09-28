@@ -54,3 +54,14 @@ apt_install_packages:
   - 'unrar'
   - 'unzip'
   - 'xcvt'
+
+users:
+  admin:
+    name: 'tux'
+    uid: 1000
+    has_sudo_privileges: true
+    ssh_authorized_keys: []
+
+# This variable should be declarated in an ansible-vault
+user_passwords:
+  tux: '123456'
