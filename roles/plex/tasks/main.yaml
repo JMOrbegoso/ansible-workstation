@@ -1,0 +1,5 @@
+---
+- name: 'Install Plex'
+  community.general.flatpak:
+    name: '{{ plex_flathub_id }}'
+    state: present
