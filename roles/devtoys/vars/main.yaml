@@ -1,0 +1,3 @@
+devtoys_ansible_work_path: '{{ ansible_work_path }}/devtoys'
+
+devtoys_github_repository: 'DevToys-app/DevToys'
