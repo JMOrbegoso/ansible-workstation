@@ -1,0 +1,5 @@
+---
+- name: 'Install FreeTube'
+  community.general.flatpak:
+    name: '{{ freetube_flathub_id }}'
+    state: present
