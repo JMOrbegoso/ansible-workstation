@@ -1,0 +1,7 @@
+---
+- name: 'Install GParted'
+  ansible.builtin.apt:
+    name: '{{ item }}'
+    state: present
+    install_recommends: false
+  loop: '{{ gparted_packages }}'
