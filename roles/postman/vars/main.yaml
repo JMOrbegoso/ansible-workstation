@@ -1,0 +1,3 @@
+postman_role_files_path: '{{ role_path }}/files'
+
+postman_ansible_work_path: '{{ ansible_work_path }}/postman'

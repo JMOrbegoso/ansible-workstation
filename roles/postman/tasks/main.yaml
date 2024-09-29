@@ -1,0 +1,69 @@
+---
+- name: 'Create Postman dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ postman_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Download Postman package'
+  ansible.builtin.get_url:
+    url: '{{ postman_download_path }}'
+    dest: '{{ postman_ansible_work_path }}/postman.tar.gz'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: 'Create Postman binary directory'
+  ansible.builtin.file:
+    path: '/opt/Postman'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: 'Extract Postman package'
+  ansible.builtin.unarchive:
+    src: '{{ postman_ansible_work_path }}/postman.tar.gz'
+    dest: '/opt'
+    include: 'Postman'
+    owner: 'root'
+    group: 'root'
+    remote_src: true
+    creates: '/opt/Postman/Postman'
+
+- name: 'Create Postman symlink'
+  ansible.builtin.file:
+    src: '/opt/Postman/Postman'
+    dest: '/usr/bin/postman'
+    state: link
+    owner: 'root'
+    group: 'root'
+    mode: '0777'
+
+- name: 'Copy Postman icon'
+  ansible.builtin.copy:
+    src: '{{ postman_role_files_path }}/postman.svg'
+    dest: '/usr/share/pixmaps/postman.svg'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Copy Postman desktop-file'
+  ansible.builtin.copy:
+    src: '{{ postman_role_files_path }}/postman.desktop'
+    dest: '{{ postman_ansible_work_path }}/postman.desktop'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Install Postman desktop-file'
+  ansible.builtin.shell:
+    cmd: 'desktop-file-install {{ postman_ansible_work_path }}/postman.desktop'
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'

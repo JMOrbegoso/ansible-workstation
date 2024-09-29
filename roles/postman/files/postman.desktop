@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Development;
+Comment=Supercharge your API workflow
+Exec=postman
+Icon=postman
+Name=Postman
+Terminal=false
+Type=Application
