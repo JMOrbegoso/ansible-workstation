@@ -1,0 +1,5 @@
+ungoogled_chromium_role_files_path: '{{ role_path }}/files'
+
+ungoogled_chromium_ansible_work_path: '{{ ansible_work_path }}/ungoogled-chromium'
+
+ungoogled_chromium_flathub_id: 'io.github.ungoogled_software.ungoogled_chromium'

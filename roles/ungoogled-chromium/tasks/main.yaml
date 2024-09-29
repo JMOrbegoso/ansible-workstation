@@ -1,0 +1,43 @@
+---
+- name: 'Install ungoogled-chromium'
+  community.general.flatpak:
+    name: '{{ ungoogled_chromium_flathub_id }}'
+    state: present
+
+- name: 'Copy ungoogled-chromium icons'
+  ansible.builtin.copy:
+    src: '{{ ungoogled_chromium_role_files_path }}/{{ item }}'
+    dest: '/usr/share/pixmaps/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+  loop:
+    - 'ungoogled-chromium-incognito.svg'
+
+- name: 'Create ungoogled-chromium dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ ungoogled_chromium_ansible_work_path }}'
+    state: directory
+    mode: '0775'
+
+- name: 'Copy ungoogled-chromium desktop files'
+  ansible.builtin.copy:
+    src: '{{ ungoogled_chromium_role_files_path }}/{{ item }}'
+    dest: '{{ ungoogled_chromium_ansible_work_path }}/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+  loop:
+    - 'ungoogled-chromium-incognito.desktop'
+
+- name: 'Install ungoogled-chromium desktop files'
+  ansible.builtin.shell:
+    cmd: 'desktop-file-install {{ ungoogled_chromium_ansible_work_path }}/{{ item }}'
+  loop:
+    - 'ungoogled-chromium-incognito.desktop'
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'
