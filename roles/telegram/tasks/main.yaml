@@ -1,0 +1,5 @@
+---
+- name: 'Install Telegram'
+  community.general.flatpak:
+    name: '{{ telegram_flathub_id }}'
+    state: present
