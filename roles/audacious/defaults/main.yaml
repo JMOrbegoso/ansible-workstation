@@ -1,0 +1,4 @@
+audacious_packages:
+  - 'audacious-plugins-data'
+  - 'audacious-plugins'
+  - 'audacious'
