@@ -1,0 +1,6 @@
+gimp_packages:
+  - 'gimp-data-extras'
+  - 'gimp-data'
+  - 'gimp-help-common'
+  - 'gimp-help-en'
+  - 'gimp'
