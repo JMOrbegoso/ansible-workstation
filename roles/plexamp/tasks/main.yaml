@@ -1,0 +1,5 @@
+---
+- name: 'Install Plexamp'
+  community.general.flatpak:
+    name: '{{ plexamp_flathub_id }}'
+    state: present
