@@ -1,0 +1,3 @@
+mkvtoolnix_packages:
+  - 'mkvtoolnix'
+  - 'mkvtoolnix-gui'
