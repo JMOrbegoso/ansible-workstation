@@ -1,0 +1,5 @@
+vlc_packages:
+  - 'vlc-bin'
+  - 'vlc-data'
+  - 'vlc-l10n'
+  - 'vlc'
