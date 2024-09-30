@@ -1,0 +1,5 @@
+---
+- name: 'Install DBeaver Community'
+  community.general.flatpak:
+    name: '{{ dbeaver_flathub_id }}'
+    state: present
