@@ -1,0 +1,22 @@
+---
+- name: 'Install Raspberry Pi Imager'
+  ansible.builtin.apt:
+    deb: '{{ raspberrypi_imager_download_path }}'
+
+- name: 'Delete default desktop file'
+  ansible.builtin.file:
+    path: '/usr/share/applications/org.raspberrypi.rpi-imager.desktop'
+    state: absent
+
+- name: 'Copy Raspberry Pi Imager desktop file'
+  ansible.builtin.copy:
+    src: '{{ raspberrypi_imager_role_files_path }}/raspberrypi-imager.desktop'
+    dest: '/usr/share/applications/raspberrypi-imager.desktop'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'

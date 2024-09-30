@@ -1,0 +1,1 @@
+raspberrypi_imager_role_files_path: '{{ role_path }}/files'
