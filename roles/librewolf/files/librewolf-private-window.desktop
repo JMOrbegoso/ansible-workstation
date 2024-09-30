@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=LibreWolf Private Window
+GenericName=Web Browser
+StartupNotify=true
+Terminal=false
+MimeType=x-scheme-handler/http;x-scheme-handler/https;
+Comment=LibreWolf Web Browser Private Window
+Categories=Network;WebBrowser;Security;
+StartupWMClass=librewolf-default
+Exec=/usr/share/librewolf/librewolf %u --private-window
+Icon=librewolf-private-browsing

@@ -1,0 +1,27 @@
+[Desktop Entry]
+Type=Application
+Name=LibreWolf
+GenericName=Web Browser
+StartupNotify=true
+Terminal=false
+MimeType=x-scheme-handler/http;x-scheme-handler/https;
+Comment=LibreWolf Web Browser
+Categories=Network;WebBrowser;Security;
+StartupWMClass=librewolf-default
+Exec=/usr/share/librewolf/librewolf %u
+Icon=librewolf
+
+Actions=new-window;new-private-window;safe-mode;preferences;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=/usr/share/librewolf/librewolf
+[Desktop Action new-private-window]
+Name=New Private Window
+Exec=/usr/share/librewolf/librewolf --private-window %u
+[Desktop Action safe-mode]
+Name=Start in Safe Mode
+Exec=/usr/share/librewolf/librewolf --safe-mode
+[Desktop Action preferences]
+Name=Show Preferences
+Exec=/usr/share/librewolf/librewolf --preferences

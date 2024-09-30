@@ -1,0 +1,6 @@
+librewolf_apt_repository_signing_key: 'https://deb.librewolf.net/keyring.gpg'
+librewolf_apt_repository_url: 'https://deb.librewolf.net'
+librewolf_apt_repository_options: 'bookworm main'
+
+librewolf_packages:
+  - 'librewolf'

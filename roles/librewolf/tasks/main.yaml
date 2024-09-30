@@ -1,0 +1,66 @@
+---
+- name: 'Add LibreWolf repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ librewolf_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/librewolf.gpg'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add LibreWolf repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/librewolf.gpg] {{ librewolf_apt_repository_url }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install LibreWolf'
+  ansible.builtin.apt:
+    name: '{{ item }}'
+    state: present
+    install_recommends: false
+  loop: '{{ librewolf_packages }}'
+
+- name: 'Copy LibreWolf icons'
+  ansible.builtin.copy:
+    src: '{{ librewolf_role_files_path }}/{{ item }}'
+    dest: '/usr/share/pixmaps/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+  loop:
+    - 'librewolf.svg'
+    - 'librewolf-private-browsing.svg'
+
+- name: 'Create LibreWolf dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ librewolf_ansible_work_path }}'
+    state: directory
+    mode: '0775'
+
+- name: 'Copy LibreWolf desktop files'
+  ansible.builtin.copy:
+    src: '{{ librewolf_role_files_path }}/{{ item }}'
+    dest: '{{ librewolf_ansible_work_path }}/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+  loop:
+    - 'librewolf.desktop'
+    - 'librewolf-private-window.desktop'
+
+- name: 'Install LibreWolf desktop files'
+  ansible.builtin.shell:
+    cmd: 'desktop-file-install {{ librewolf_ansible_work_path }}/{{ item }}'
+  loop:
+    - 'librewolf.desktop'
+    - 'librewolf-private-window.desktop'
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'
