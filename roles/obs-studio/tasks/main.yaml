@@ -1,0 +1,12 @@
+---
+- name: 'Install OBS Studio required packages'
+  ansible.builtin.apt:
+    name: '{{ item }}'
+    state: present
+    install_recommends: false
+  loop: '{{ obs_studio_required_packages }}'
+
+- name: 'Install OBS Studio'
+  community.general.flatpak:
+    name: '{{ obs_studio_flathub_id }}'
+    state: present
