@@ -1,0 +1,25 @@
+---
+- name: 'Add Enpass repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ enpass_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/enpass.key'
+    mode: '0644'
+    owner: 'root'
+    group: 'root'
+    force: true
+
+- name: 'Add Enpass repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/enpass.key] {{ enpass_apt_repository_url }} {{ enpass_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Enpass'
+  ansible.builtin.apt:
+    name: '{{ item }}'
+    state: present
+    install_recommends: false
+  loop: '{{ enpass_packages }}'
