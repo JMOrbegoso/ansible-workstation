@@ -1,0 +1,5 @@
+---
+- name: 'Install YACReader'
+  community.general.flatpak:
+    name: '{{ yacreader_flathub_id }}'
+    state: present
