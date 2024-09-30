@@ -1,0 +1,34 @@
+---
+- name: 'Add Brave repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ brave_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/brave-browser-archive-keyring.gpg'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Brave repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] {{ brave_apt_repository_url }} {{ brave_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Load packages as ansible facts'
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: 'Install Brave required  deb packages'
+  ansible.builtin.apt:
+    deb: '{{ item }}'
+  loop: '{{ brave_required_deb_packages }}'
+
+- name: 'Install Brave'
+  ansible.builtin.apt:
+    name: '{{ item }}'
+    state: present
+    install_recommends: false
+  loop: '{{ brave_packages }}'

@@ -1,0 +1,9 @@
+brave_apt_repository_signing_key: 'https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg'
+brave_apt_repository_url: 'https://brave-browser-apt-release.s3.brave.com/'
+brave_apt_repository_options: 'stable main'
+
+brave_required_deb_packages:
+  - 'http://ftp.us.debian.org/debian/pool/main/libu/libu2f-host/libu2f-udev_1.1.10-3_all.deb'
+
+brave_packages:
+  - 'brave-browser'
