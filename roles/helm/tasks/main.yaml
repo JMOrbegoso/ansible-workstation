@@ -1,0 +1,24 @@
+---
+- name: 'Add Helm repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ helm_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/helm.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Helm repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/helm.asc] {{ helm_apt_repository_url }} {{ helm_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Helm'
+  ansible.builtin.apt:
+    name: '{{ helm_packages }}'
+    state: present
+    install_recommends: false

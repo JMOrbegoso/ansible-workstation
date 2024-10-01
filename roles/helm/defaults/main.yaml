@@ -1,0 +1,6 @@
+helm_apt_repository_signing_key: 'https://baltocdn.com/helm/signing.asc'
+helm_apt_repository_url: 'https://baltocdn.com/helm/stable/debian/'
+helm_apt_repository_options: 'all main'
+
+helm_packages:
+  - 'helm'
