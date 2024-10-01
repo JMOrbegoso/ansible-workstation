@@ -28,7 +28,6 @@
 
 - name: 'Install Brave'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ brave_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ brave_packages }}'

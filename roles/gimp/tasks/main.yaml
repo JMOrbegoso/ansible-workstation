@@ -1,7 +1,6 @@
 ---
 - name: 'Install Gimp'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ gimp_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ gimp_packages }}'

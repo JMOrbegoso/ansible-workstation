@@ -1,7 +1,6 @@
 ---
 - name: 'Install Ristretto Image Viewer'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ ristretto_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ ristretto_packages }}'

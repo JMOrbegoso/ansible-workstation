@@ -1,7 +1,6 @@
 ---
 - name: 'Install Blueman'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ blueman_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ blueman_packages }}'

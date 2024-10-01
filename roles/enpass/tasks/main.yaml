@@ -19,7 +19,6 @@
 
 - name: 'Install Enpass'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ enpass_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ enpass_packages }}'

@@ -19,10 +19,9 @@
 
 - name: 'Install LibreWolf'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ librewolf_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ librewolf_packages }}'
 
 - name: 'Copy LibreWolf icons'
   ansible.builtin.copy:

@@ -1,12 +1,9 @@
 ---
-- name: 'Install Flatpak required packages using APT'
+- name: 'Install Flatpak required packages'
   ansible.builtin.apt:
-    name: '{{ package }}'
+    name: '{{ flatpak_required_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ flatpak_required_packages }}'
-  loop_control:
-    loop_var: 'package'
 
 - name: 'Install Flatpak using APT'
   ansible.builtin.apt:

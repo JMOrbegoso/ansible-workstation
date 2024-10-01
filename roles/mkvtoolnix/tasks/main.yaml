@@ -1,7 +1,6 @@
 ---
 - name: 'Install MKVToolNix'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ mkvtoolnix_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ mkvtoolnix_packages }}'

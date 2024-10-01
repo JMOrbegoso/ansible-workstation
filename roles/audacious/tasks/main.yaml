@@ -1,7 +1,6 @@
 ---
 - name: 'Install Audacious'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ audacious_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ audacious_packages }}'

@@ -1,7 +1,6 @@
 ---
 - name: 'Install VLC'
   ansible.builtin.apt:
-    name: '{{ item }}'
+    name: '{{ vlc_packages }}'
     state: present
     install_recommends: false
-  loop: '{{ vlc_packages }}'
