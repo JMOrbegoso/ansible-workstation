@@ -1,0 +1,35 @@
+---
+- name: 'Get HUGO latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ hugo_github_repository }}/releases/latest'
+    return_content: true
+  register: 'hugo_version'
+
+- name: 'Create HUGO dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ hugo_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Download HUGO latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ hugo_github_repository }}/releases/download/{{ hugo_version.json.tag_name }}/hugo_extended_{{ hugo_version.json.tag_name | replace("v", "") }}_linux-amd64.tar.gz'
+    dest: '{{ hugo_ansible_work_path }}/hugo_extended_amd64.tar.gz'
+    mode: '0660'
+    force: true
+
+- name: 'Extract HUGO release tarball'
+  ansible.builtin.unarchive:
+    src: '{{ hugo_ansible_work_path }}/hugo_extended_amd64.tar.gz'
+    dest: '{{ hugo_ansible_work_path }}'
+    remote_src: true
+
+- name: 'Move HUGO binary'
+  ansible.builtin.copy:
+    src: '{{ hugo_ansible_work_path }}/hugo'
+    dest: '/usr/local/bin/hugo'
+    mode: '0715'
+    force: true
+    remote_src: true

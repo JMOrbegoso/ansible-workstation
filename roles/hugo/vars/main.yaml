@@ -1,0 +1,3 @@
+hugo_ansible_work_path: '{{ ansible_work_path }}/hugo'
+
+hugo_github_repository: 'gohugoio/hugo'
