@@ -1,0 +1,1 @@
+tmux_role_files_path: '{{ role_path }}/files'

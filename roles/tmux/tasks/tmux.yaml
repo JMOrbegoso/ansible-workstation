@@ -1,0 +1,14 @@
+---
+- name: 'Install Tmux'
+  ansible.builtin.apt:
+    name: 'tmux'
+    state: present
+    install_recommends: false
+
+- name: 'Configure Tmux'
+  ansible.builtin.copy:
+    src: '{{ tmux_role_files_path }}/tmux.conf'
+    dest: '/etc/tmux.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
