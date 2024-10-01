@@ -1,0 +1,8 @@
+azure_cli_apt_repository_signing_key: 'https://packages.microsoft.com/keys/microsoft.asc'
+azure_cli_apt_repository_url: 'https://packages.microsoft.com/repos/azure-cli/'
+azure_cli_apt_repository_options: 'bookworm main'
+
+azure_cli_packages:
+  - 'azure-cli'
+
+azure_cli_disable_telemetry: true

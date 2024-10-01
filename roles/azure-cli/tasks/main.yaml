@@ -1,0 +1,29 @@
+---
+- name: 'Add Azure CLI repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ azure_cli_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/azure-cli.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Azure CLI repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/azure-cli.asc] {{ azure_cli_apt_repository_url }} {{ azure_cli_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Azure CLI'
+  ansible.builtin.apt:
+    name: '{{ azure_cli_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Disable Azure CLI telemetry'
+  ansible.builtin.shell:
+    cmd: 'az config set core.collect_telemetry=no'
+  when: 'azure_cli_disable_telemetry'
