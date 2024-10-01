@@ -1,0 +1,6 @@
+vagrant_apt_repository_signing_key: 'https://apt.releases.hashicorp.com/gpg'
+vagrant_apt_repository_url: 'https://apt.releases.hashicorp.com'
+vagrant_apt_repository_options: 'bookworm main'
+
+vagrant_packages:
+  - 'vagrant'

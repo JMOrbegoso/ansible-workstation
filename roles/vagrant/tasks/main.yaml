@@ -1,0 +1,24 @@
+---
+- name: 'Add Hashicorp repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ vagrant_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/hashicorp.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Hashicorp repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/hashicorp.asc] {{ vagrant_apt_repository_url }} {{ vagrant_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Vagrant'
+  ansible.builtin.apt:
+    name: '{{ vagrant_packages }}'
+    state: present
+    install_recommends: false
