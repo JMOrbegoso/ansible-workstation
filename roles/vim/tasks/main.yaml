@@ -1,0 +1,22 @@
+---
+- name: 'Install Vim'
+  ansible.builtin.apt:
+    name: 'vim'
+    state: present
+    install_recommends: false
+
+- name: 'Create Vim system config directory'
+  ansible.builtin.file:
+    path: '/etc/vim'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: 'Configure Vim'
+  ansible.builtin.copy:
+    src: '{{ vim_role_files_path }}/vimrc.vim'
+    dest: '/etc/vim/vimrc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
