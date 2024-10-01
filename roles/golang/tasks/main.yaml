@@ -1,0 +1,31 @@
+---
+- name: 'Create Golang dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ golang_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Find latest Golang version'
+  ansible.builtin.shell:
+    cmd: 'curl -s {{ golang_latest_version_url }} | head -n 1 | tr -d "\n"'
+  register: 'go_version'
+
+- name: 'Download latest Golang release'
+  ansible.builtin.get_url:
+    url: 'https://go.dev/dl/{{ go_version.stdout }}.linux-amd64.tar.gz'
+    dest: '{{ golang_ansible_work_path }}/{{ go_version.stdout }}.linux-amd64.tar.gz'
+    mode: '0660'
+
+- name: 'Delete Golang directory'
+  ansible.builtin.file:
+    path: '/usr/local/go'
+    state: absent
+
+- name: 'Extract Golang release tarball'
+  ansible.builtin.unarchive:
+    src: '{{ golang_ansible_work_path }}/{{ go_version.stdout }}.linux-amd64.tar.gz'
+    dest: '/usr/local'
+    remote_src: true
+    creates: '/usr/local/go/bin/go'

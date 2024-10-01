@@ -1,0 +1,1 @@
+golang_ansible_work_path: '{{ ansible_work_path }}/golang'
