@@ -1,0 +1,13 @@
+docker_apt_repository_signing_key: 'https://download.docker.com/linux/debian/gpg'
+docker_apt_repository_url: 'https://download.docker.com/linux/debian'
+docker_apt_repository_options: 'bookworm stable'
+
+docker_packages:
+  - 'containerd.io'
+  - 'docker-buildx-plugin'
+  - 'docker-ce-cli'
+  - 'docker-ce'
+  - 'docker-compose-plugin'
+  - 'python3-docker'
+
+docker_users_in_docker_group: []

@@ -1,0 +1,45 @@
+---
+- name: 'Add Docker repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ docker_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/docker.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Docker repository to APT'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/docker.asc] {{ docker_apt_repository_url }} {{ docker_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Docker'
+  ansible.builtin.apt:
+    name: '{{ docker_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Configure the Docker service'
+  ansible.builtin.service:
+    name: 'docker.service'
+    state: started
+    enabled: true
+
+- name: 'Log into DockerHub'
+  community.docker.docker_login:
+    username: '{{ dockerhub_username }}'
+    password: '{{ dockerhub_password }}'
+  when: '(dockerhub_username is defined) and (dockerhub_password is defined)'
+
+- name: 'Add users to the Docker group'
+  ansible.builtin.user:
+    name: '{{ user_name }}'
+    groups: 'docker'
+    append: true
+  loop: '{{ docker_users_in_docker_group }}'
+  loop_control:
+    loop_var: 'user_name'
