@@ -1,0 +1,30 @@
+---
+- name: 'Add Dotnet repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ dotnet_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/dotnet.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Dotnet repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/dotnet.asc] {{ dotnet_apt_repository_url }} {{ dotnet_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Dotnet dependencies'
+  ansible.builtin.apt:
+    name: '{{ dotnet_dependency_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Install Dotnet'
+  ansible.builtin.apt:
+    name: '{{ dotnet_packages }}'
+    state: present
+    install_recommends: false

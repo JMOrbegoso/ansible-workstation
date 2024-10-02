@@ -1,0 +1,15 @@
+dotnet_apt_repository_signing_key: 'https://packages.microsoft.com/keys/microsoft.asc'
+dotnet_apt_repository_url: 'https://packages.microsoft.com/debian/12/prod'
+dotnet_apt_repository_options: 'bookworm main'
+
+dotnet_dependency_packages:
+  - 'libc6'
+  - 'libgcc-s1'
+  - 'libgssapi-krb5-2'
+  - 'libicu72'
+  - 'libssl3'
+  - 'libstdc++6'
+  - 'zlib1g'
+
+dotnet_packages:
+  - 'dotnet-sdk-8.0'
