@@ -1,0 +1,5 @@
+git_packages:
+  - 'git'
+
+git_libsecret_build_packages:
+  - 'libsecret-1-dev'

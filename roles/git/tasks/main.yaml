@@ -1,0 +1,16 @@
+---
+- name: 'Install git'
+  ansible.builtin.apt:
+    name: '{{ git_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Install required packages for libsecret build'
+  ansible.builtin.apt:
+    name: '{{ git_libsecret_build_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Build libsecret'
+  community.general.make:
+    chdir: '/usr/share/doc/git/contrib/credential/libsecret'
