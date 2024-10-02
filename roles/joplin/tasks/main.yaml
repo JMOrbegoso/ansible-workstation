@@ -1,0 +1,76 @@
+---
+- name: 'Create Joplin dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ joplin_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get Joplin latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ joplin_github_repository }}/releases/latest'
+    return_content: true
+  register: 'joplin_version'
+
+- name: 'Download Joplin latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ joplin_github_repository }}/releases/download/{{ joplin_version.json.tag_name }}/Joplin-{{ joplin_version.json.tag_name | replace("v", "") }}.AppImage'
+    dest: '{{ joplin_ansible_work_path }}/Joplin.AppImage'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Create Joplin binary directory'
+  ansible.builtin.file:
+    path: '/opt/Joplin'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: 'Move Joplin AppImage'
+  ansible.builtin.copy:
+    src: '{{ joplin_ansible_work_path }}/Joplin.AppImage'
+    dest: '/opt/Joplin/Joplin.AppImage'
+    owner: 'root'
+    group: 'root'
+    mode: '0715'
+    force: true
+    remote_src: true
+
+- name: 'Create Joplin symlink'
+  ansible.builtin.file:
+    src: '/opt/Joplin/Joplin.AppImage'
+    dest: '/usr/bin/joplin'
+    state: link
+    owner: 'root'
+    group: 'root'
+    mode: '0777'
+
+- name: 'Copy Joplin icon'
+  ansible.builtin.copy:
+    src: '{{ joplin_role_files_path }}/joplin.png'
+    dest: '/usr/share/pixmaps/Joplin.png'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Copy Joplin desktop-file'
+  ansible.builtin.copy:
+    src: '{{ joplin_role_files_path }}/joplin.desktop'
+    dest: '{{ joplin_ansible_work_path }}/joplin.desktop'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Install Joplin desktop-file'
+  ansible.builtin.shell:
+    cmd: 'desktop-file-install {{ joplin_ansible_work_path }}/joplin.desktop'
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'

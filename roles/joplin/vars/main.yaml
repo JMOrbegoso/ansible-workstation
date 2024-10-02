@@ -1,0 +1,5 @@
+joplin_role_files_path: '{{ role_path }}/files'
+
+joplin_ansible_work_path: '{{ ansible_work_path }}/joplin'
+
+joplin_github_repository: 'laurent22/joplin'
