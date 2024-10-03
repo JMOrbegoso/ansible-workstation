@@ -1,0 +1,21 @@
+---
+- name: 'Create Minikube dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ minikube_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Download Minikube installer'
+  ansible.builtin.get_url:
+    url: '{{ minikube_download_path }}'
+    dest: '{{ minikube_ansible_work_path }}/minikube-linux'
+    owner: 'root'
+    group: 'root'
+    mode: '0715'
+    force: true
+
+- name: 'Install Minikube'
+  ansible.builtin.shell:
+    cmd: 'install {{ minikube_ansible_work_path }}/minikube-linux /usr/local/bin/minikube'
