@@ -1,0 +1,41 @@
+---
+- name: 'Create VirtualBox dotfiles work directory'
+  ansible.builtin.file:
+    path: '{{ virtualbox_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Add VirtualBox repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ virtualbox_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/virtualbox.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add VirtualBox repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/virtualbox.asc] {{ virtualbox_apt_repository_url }} {{ virtualbox_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install VirtualBox'
+  ansible.builtin.apt:
+    name: '{{ virtualbox_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Add users to the vboxusers group'
+  ansible.builtin.user:
+    name: '{{ user_name }}'
+    groups: 'vboxusers'
+    append: true
+  loop: '{{ virtualbox_users_in_vboxusers_group }}'
+  loop_control:
+    loop_var: 'user_name'

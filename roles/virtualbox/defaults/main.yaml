@@ -1,0 +1,8 @@
+virtualbox_apt_repository_signing_key: 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'
+virtualbox_apt_repository_url: 'https://download.virtualbox.org/virtualbox/debian'
+virtualbox_apt_repository_options: 'bookworm contrib'
+
+virtualbox_packages:
+  - 'virtualbox-7.0'
+
+virtualbox_users_in_vboxusers_group: []
