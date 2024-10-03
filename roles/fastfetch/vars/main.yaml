@@ -1,0 +1,3 @@
+fastfetch_role_templates_path: '{{ role_path }}/templates'
+
+fastfetch_github_repository: 'fastfetch-cli/fastfetch'

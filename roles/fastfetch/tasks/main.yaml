@@ -1,0 +1,29 @@
+---
+- name: 'Get user for Fastfetch role'
+  register: 'fastfetch_role_user'
+  ansible.builtin.user:
+    name: '{{ fastfetch_role_user_name }}'
+
+- name: 'Set Fastfetch release architecture'
+  ansible.builtin.set_fact:
+    fastfetch_release_architecture: '{% if ansible_architecture == "arm64" %}aarch64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Install Fastfetch from the latest deb release'
+  ansible.builtin.apt:
+    deb: 'https://github.com/{{ fastfetch_github_repository }}/releases/latest/download/fastfetch-linux-{{ fastfetch_release_architecture }}.deb'
+
+- name: 'Create fastfetch config directory'
+  ansible.builtin.file:
+    path: '{{ fastfetch_role_user.home }}/.config/fastfetch'
+    state: directory
+    owner: '{{ fastfetch_role_user.name }}'
+    group: '{{ fastfetch_role_user.name }}'
+    mode: '0700'
+
+- name: 'Template and copy Fastfetch config.jsonc file'
+  ansible.builtin.template:
+    src: '{{ fastfetch_role_templates_path }}/fastfetch.jsonc.j2'
+    dest: '{{ fastfetch_role_user.home }}/.config/fastfetch/config.jsonc'
+    owner: '{{ fastfetch_role_user.name }}'
+    group: '{{ fastfetch_role_user.name }}'
+    mode: '0660'

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://github.com/{{ fastfetch_github_repository }}/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "small",
+    "padding": {
+      "top": 4
+    }
+  },
+  "display": {
+    "separator": ": "
+  },
+  "modules": [
+    {
+      "key": " Hostname",
+      "type": "title",
+      "format": "{2}",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " User",
+      "type": "title",
+      "format": "{1}",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": "󰅐 Uptime",
+      "type": "uptime",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Distro",
+      "type": "os",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Kernel",
+      "type": "kernel",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Packages",
+      "type": "packages",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Desktop Environment",
+      "type": "de",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Windows Manager",
+      "type": "wm",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Shell",
+      "type": "shell",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " Term",
+      "type": "terminal",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": "󰻠 CPU",
+      "type": "cpu",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": " GPU",
+      "type": "gpu",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+    {
+      "key": "󰑭 Memory",
+      "type": "memory",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+{% for item in ansible_mounts | map(attribute='mount') | reject('match', '^\/boot.*') | reject('match', '^.*smb.*') | sort %}
+    {
+      "key": " Disk ({{ item }})",
+      "type": "disk",
+      "folders": "{{ item }}",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    },
+{% endfor %}
+    {
+      "key": " IP",
+      "type": "localip",
+      "format": "{1} ({4})",
+      "keyColor": "{{ fastfetch_foreground_accent_color }}"
+    }
+  ]
+}
