@@ -1,0 +1,19 @@
+---
+- name: 'Set checksum-utils release architecture'
+  ansible.builtin.set_fact:
+    checksum_utils_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Get checksum-utils latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ checksum_utils_github_repository }}/releases/latest'
+    return_content: true
+  register: 'checksum_utils_version'
+
+- name: 'Download checksum-utils latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ checksum_utils_github_repository }}/releases/download/{{ checksum_utils_version.json.tag_name }}/checksum-utils_linux-{{ checksum_utils_release_architecture }}'
+    dest: '/usr/local/bin/checksum-utils'
+    owner: 'root'
+    group: 'root'
+    mode: '0715'
+    force: true
