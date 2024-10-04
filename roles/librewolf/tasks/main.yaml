@@ -35,7 +35,7 @@
     - 'librewolf.svg'
     - 'librewolf-private-browsing.svg'
 
-- name: 'Create LibreWolf dotfiles work directory'
+- name: 'Create LibreWolf role work directory'
   ansible.builtin.file:
     path: '{{ librewolf_ansible_work_path }}'
     state: directory

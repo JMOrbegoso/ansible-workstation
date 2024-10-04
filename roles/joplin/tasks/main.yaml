@@ -1,5 +1,5 @@
 ---
-- name: 'Create Joplin dotfiles work directory'
+- name: 'Create Joplin role work directory'
   ansible.builtin.file:
     path: '{{ joplin_ansible_work_path }}'
     state: directory

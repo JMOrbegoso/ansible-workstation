@@ -1,5 +1,5 @@
 ---
-- name: 'Create Minikube dotfiles work directory'
+- name: 'Create Minikube role work directory'
   ansible.builtin.file:
     path: '{{ minikube_ansible_work_path }}'
     state: directory

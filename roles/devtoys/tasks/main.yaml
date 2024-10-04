@@ -9,7 +9,7 @@
   set_fact:
     devtoys_version: "{{ (devtoys_releases.content | from_json | json_query('[?prerelease == `true`].tag_name'))[0] }}"
 
-- name: 'Create DevToys dotfiles work directory'
+- name: 'Create DevToys role work directory'
   ansible.builtin.file:
     path: '{{ devtoys_ansible_work_path }}'
     state: directory

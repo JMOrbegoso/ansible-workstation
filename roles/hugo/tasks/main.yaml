@@ -5,7 +5,7 @@
     return_content: true
   register: 'hugo_version'
 
-- name: 'Create HUGO dotfiles work directory'
+- name: 'Create HUGO role work directory'
   ansible.builtin.file:
     path: '{{ hugo_ansible_work_path }}'
     state: directory

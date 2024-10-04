@@ -1,5 +1,5 @@
 ---
-- name: 'Create VirtualBox dotfiles work directory'
+- name: 'Create VirtualBox role work directory'
   ansible.builtin.file:
     path: '{{ virtualbox_ansible_work_path }}'
     state: directory

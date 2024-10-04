@@ -15,7 +15,7 @@
   loop:
     - 'ungoogled-chromium-incognito.svg'
 
-- name: 'Create ungoogled-chromium dotfiles work directory'
+- name: 'Create ungoogled-chromium role work directory'
   ansible.builtin.file:
     path: '{{ ungoogled_chromium_ansible_work_path }}'
     state: directory

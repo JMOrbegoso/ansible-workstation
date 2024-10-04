@@ -1,5 +1,5 @@
 ---
-- name: 'Create Golang dotfiles work directory'
+- name: 'Create Golang role work directory'
   ansible.builtin.file:
     path: '{{ golang_ansible_work_path }}'
     state: directory

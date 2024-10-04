@@ -1,5 +1,5 @@
 ---
-- name: 'Create Postman dotfiles work directory'
+- name: 'Create Postman role work directory'
   ansible.builtin.file:
     path: '{{ postman_ansible_work_path }}'
     state: directory
