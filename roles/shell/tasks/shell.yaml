@@ -1,0 +1,40 @@
+---
+- name: 'Create main shell directory'
+  ansible.builtin.file:
+    path: '{{ shell_role_user.home }}/.shell'
+    state: directory
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0755'
+
+- name: 'Create shell aliases directory'
+  ansible.builtin.file:
+    path: '{{ shell_role_user.home }}/.shell/aliases'
+    state: directory
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0755'
+
+- name: 'Create shell exports directory'
+  ansible.builtin.file:
+    path: '{{ shell_role_user.home }}/.shell/exports'
+    state: directory
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0755'
+
+- name: 'Create shell functions directory'
+  ansible.builtin.file:
+    path: '{{ shell_role_user.home }}/.shell/functions'
+    state: directory
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0755'
+
+- name: 'Create shell scripts directory'
+  ansible.builtin.file:
+    path: '{{ shell_role_user.home }}/.shell/scripts'
+    state: directory
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0755'

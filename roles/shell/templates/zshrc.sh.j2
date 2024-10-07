@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Automatically update without prompting.
+DISABLE_UPDATE_PROMPT="true"
+
+# How often to auto-update (in days).
+UPDATE_ZSH_DAYS=7
+
+# Path to the oh-my-zsh installation.
+export ZSH="$HOME/.shell/oh-my-zsh"
+
+# Set default editor
+export EDITOR=vim
+
+# Export TERM
+export TERM="xterm-256color"
+
+# Export GPG
+export GPG_TTY=$(tty)
+
+# Set exports
+{% for item in shell_zshrc_exports %}
+export {{ item.name }}="{{ item.path }}"
+{% endfor %}
+
+# Set aliases
+{{ shell_zshrc_aliases }}
+
+# Set PATH
+{% for item in shell_zshrc_paths %}
+export PATH="$PATH:{{ item }}"
+{% endfor %}
+
+{% if shell_zsh_add_kube_contexts %}
+# Set KUBECONFIG
+if [ -d "$HOME/.kube" ]; then
+  export KUBECONFIG="$HOME/.kube/conf"
+  for config in "$HOME/.kube/ctx-"*".conf"; do
+    export KUBECONFIG="$KUBECONFIG:$config"
+  done
+fi
+{% endif %}
+
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# p10k settings
+source "$HOME/.p10k.zsh"
+
+# oh-my-zsh plugins to load
+# https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
+plugins=(
+{% for item in shell_ohmyzsh_plugins %}
+  '{{ item }}'
+{% endfor %}
+)
+
+# Load oh-my-zsh
+source "$ZSH/oh-my-zsh.sh"

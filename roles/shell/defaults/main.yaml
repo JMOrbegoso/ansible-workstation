@@ -1,0 +1,53 @@
+shell_ohmyzsh_installation_script_download_path: 'https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh'
+
+shell_zshrc_aliases: |
+  # Show all aliases
+  alias aliases="als"
+
+  # Create folder and navigate to it
+  alias mkcd="take -v"
+
+  # Count files recursively
+  alias cfr="find $1 -type f | wc -l"
+
+  # List the content of PATH environment variables
+  alias pathl="echo '$PATH' | tr ':' '\n' | nl"
+
+  # Refresh ZSH configuration
+  alias src="source $HOME/.zshrc"
+
+  # scripts
+  alias command_exists="$HOME/.shell/scripts/command-exists.sh"
+
+shell_zshrc_exports:
+  - name: 'ANSIBLE_WORKDIR'
+    path: '{{ ansible_work_path }}'
+
+shell_zshrc_paths:
+  - '/sbin'
+  - '/usr/local/sbin'
+  - '/usr/sbin'
+
+shell_script_files:
+  - name: 'command-exists.sh'
+    content: |
+      # Returns TRUE if a command exists, otherwise returns FALSE
+      command -v "${1}" >/dev/null 2>&1
+
+shell_ohmyzsh_external_plugins:
+  - repository_url: 'https://github.com/zsh-users/zsh-autosuggestions.git'
+    version: master
+  - repository_url: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+    version: master
+
+shell_ohmyzsh_plugins:
+  - 'aliases'
+  - 'fzf'
+  - 'git'
+  - 'gpg-agent'
+  - 'tmux'
+  - 'zsh-autosuggestions'
+  - 'zsh-interactive-cd'
+  - 'zsh-syntax-highlighting'
+
+shell_zsh_add_kube_contexts: false

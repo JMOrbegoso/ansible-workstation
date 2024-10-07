@@ -1,0 +1,31 @@
+---
+- name: 'Get user for shell role'
+  register: 'shell_role_user'
+  ansible.builtin.user:
+    name: '{{ shell_role_user_name }}'
+
+- name: 'Create shell role work directory'
+  ansible.builtin.file:
+    path: '{{ shell_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Create shell directories for the user'
+  ansible.builtin.include_tasks: 'shell.yaml'
+
+- name: 'Install & configure zsh'
+  ansible.builtin.include_tasks: 'zsh.yaml'
+
+- name: 'Install & configure oh-my-zsh'
+  ansible.builtin.include_tasks: 'oh-my-zsh.yaml'
+
+- name: 'Install & configure powerlevel10k'
+  ansible.builtin.include_tasks: 'powerlevel10k.yaml'
+
+- name: 'Configure the default shell'
+  ansible.builtin.include_tasks: 'default-shell.yaml'
+
+- name: 'Copy custom scripts'
+  ansible.builtin.include_tasks: 'custom-scripts.yaml'

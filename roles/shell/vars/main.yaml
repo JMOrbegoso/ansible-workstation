@@ -1,0 +1,6 @@
+shell_role_files_path: '{{ role_path }}/files'
+shell_role_templates_path: '{{ role_path }}/templates'
+
+shell_ansible_work_path: '{{ ansible_work_path }}/shell'
+
+shell_powerlevel10k_github_repository: 'romkatv/powerlevel10k'

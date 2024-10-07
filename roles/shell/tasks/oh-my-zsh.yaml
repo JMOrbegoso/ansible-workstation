@@ -1,0 +1,36 @@
+---
+- name: 'Ensure that oh-my-zsh directory is empty'
+  ansible.builtin.file:
+    path: '{{ shell_role_user.home }}/.shell/oh-my-zsh'
+    state: absent
+
+- name: 'Download oh-my-zsh installation script'
+  ansible.builtin.get_url:
+    url: '{{ shell_ohmyzsh_installation_script_download_path }}'
+    dest: '{{ shell_ansible_work_path }}/ohmyzsh-install.sh'
+    owner: 'root'
+    group: 'root'
+    mode: '0665'
+
+- name: 'Install oh-my-zsh'
+  become_user: '{{ shell_role_user.name }}'
+  ansible.builtin.script: '{{ shell_ansible_work_path }}/ohmyzsh-install.sh  --unattended --skip-chsh --keep-zshrc'
+  args:
+    creates: '{{ shell_role_user.home }}/.shell/oh-my-zsh'
+  environment:
+    ZSH: '{{ shell_role_user.home }}/.shell/oh-my-zsh'
+
+- name: 'Add custom-key-bindings.zsh'
+  ansible.builtin.copy:
+    src: '{{ shell_role_files_path }}/custom-key-bindings.zsh'
+    dest: '{{ shell_role_user.home }}/.shell/oh-my-zsh/custom/custom-key-bindings.zsh'
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0660'
+
+- name: 'Clone oh-my-zsh external plugins'
+  ansible.builtin.git:
+    repo: '{{ item.repository_url }}'
+    dest: "{{ shell_role_user.home }}/.shell/oh-my-zsh/custom/plugins/{{ item.repository_url | regex_replace('^.*/(.*)\\.git$', '\\1') }}"
+    version: '{{ item.version }}'
+  loop: '{{ shell_ohmyzsh_external_plugins }}'

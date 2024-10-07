@@ -1,0 +1,16 @@
+---
+- name: 'Clone powerlevel10k'
+  become_user: '{{ shell_role_user.name }}'
+  ansible.builtin.git:
+    repo: https://github.com/{{ shell_powerlevel10k_github_repository }}.git
+    dest: '{{ shell_role_user.home }}/.shell/oh-my-zsh/custom/themes/powerlevel10k'
+    version: master
+    depth: 1
+
+- name: 'Template and copy .p10k.zsh file'
+  ansible.builtin.template:
+    src: '{{ shell_role_templates_path }}/p10k.zsh.j2'
+    dest: '{{ shell_role_user.home }}/.p10k.zsh'
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0660'

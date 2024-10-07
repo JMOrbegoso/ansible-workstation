@@ -1,0 +1,14 @@
+---
+- name: 'Install ZSH'
+  ansible.builtin.apt:
+    name: 'zsh'
+    state: present
+    install_recommends: false
+
+- name: 'Template and copy .zshrc file'
+  ansible.builtin.template:
+    src: '{{ shell_role_templates_path }}/zshrc.sh.j2'
+    dest: '{{ shell_role_user.home }}/.zshrc'
+    owner: '{{ shell_role_user.name }}'
+    group: '{{ shell_role_user.name }}'
+    mode: '0660'
