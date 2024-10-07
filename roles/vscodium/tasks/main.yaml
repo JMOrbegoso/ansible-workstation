@@ -1,0 +1,65 @@
+---
+- name: 'Get user info for VSCodium role'
+  register: 'vscodium_role_user'
+  ansible.builtin.user:
+    name: '{{ vscodium_role_user_name }}'
+
+- name: 'Create VSCodium directories'
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ vscodium_role_user.name }}'
+    group: '{{ vscodium_role_user.name }}'
+    mode: '0770'
+  loop:
+    - '{{ vscodium_role_user.home }}/.config/VSCodium'
+    - '{{ vscodium_role_user.home }}/.config/VSCodium/User'
+
+- name: 'Copy VSCodium settings.json'
+  ansible.builtin.copy:
+    content: |
+      {{ vscodium_settings_json }}
+    dest: '{{ vscodium_role_user.home }}/.config/VSCodium/User/settings.json'
+    owner: '{{ vscodium_role_user.name }}'
+    group: '{{ vscodium_role_user.name }}'
+    mode: '0660'
+
+- name: 'Copy VSCodium keybindings.json'
+  ansible.builtin.copy:
+    content: |
+      {{ vscodium_keybindings_json }}
+    dest: '{{ vscodium_role_user.home }}/.config/VSCodium/User/keybindings.json'
+    owner: '{{ vscodium_role_user.name }}'
+    group: '{{ vscodium_role_user.name }}'
+    mode: '0660'
+
+- name: 'Add VSCodium repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ vscodium_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/vscodium.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add VSCodium repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/vscodium.asc] {{ vscodium_apt_repository_url }} {{ vscodium_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install VSCodium'
+  ansible.builtin.apt:
+    name: '{{ vscodium_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Install VSCodium extensions'
+  become: true
+  become_user: '{{ vscodium_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '/usr/bin/codium --install-extension {{ item }}'
+  loop: '{{ vscodium_extensions }}'
