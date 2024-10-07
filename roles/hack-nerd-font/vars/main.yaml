@@ -1,0 +1,3 @@
+hack_nerd_font_ansible_work_path: '{{ ansible_work_path }}/hack_nerd_font'
+
+hack_nerd_font_github_repository: 'ryanoasis/nerd-fonts'

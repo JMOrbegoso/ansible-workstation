@@ -1,0 +1,58 @@
+---
+- name: 'Create Hack nerd font role work directory'
+  ansible.builtin.file:
+    path: '{{ hack_nerd_font_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Create Hack nerd font directories'
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+  loop:
+    - '/usr/share/fonts/truetype'
+    - '/usr/share/fonts/truetype/Hack'
+
+- name: 'Get Hack nerd font latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ hack_nerd_font_github_repository }}/releases/latest'
+    return_content: true
+  register: 'hack_nerd_font_version'
+
+- name: 'Download Hack nerd font latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ hack_nerd_font_github_repository }}/releases/download/{{ hack_nerd_font_version.json.tag_name }}/Hack.zip'
+    dest: '{{ hack_nerd_font_ansible_work_path }}/Hack.zip'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Extract Hack nerd font zip file'
+  ansible.builtin.unarchive:
+    src: '{{ hack_nerd_font_ansible_work_path }}/Hack.zip'
+    dest: '{{ hack_nerd_font_ansible_work_path }}'
+    owner: 'root'
+    group: 'root'
+    remote_src: true
+
+- name: 'Find all Hack nerd font files to copy'
+  ansible.builtin.find:
+    paths: '{{ hack_nerd_font_ansible_work_path }}'
+    patterns: '*.ttf'
+    recurse: false
+  register: 'hack_nerd_font_files'
+
+- name: 'Copy Hack nerd font files'
+  ansible.builtin.copy:
+    src: '{{ item.path }}'
+    dest: '/usr/share/fonts/truetype/Hack'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  with_items: '{{ hack_nerd_font_files.files }}'
