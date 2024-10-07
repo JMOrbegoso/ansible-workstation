@@ -1,0 +1,8 @@
+system_fonts_additional_character_packages:
+  - 'fonts-noto-cjk-extra'
+  - 'fonts-noto-cjk'
+  - 'fonts-noto-color-emoji'
+  - 'fonts-noto-core'
+  - 'fonts-noto-hinted'
+  - 'fonts-noto-mono'
+  - 'fonts-noto-ui-core'

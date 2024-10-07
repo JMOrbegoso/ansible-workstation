@@ -1,0 +1,6 @@
+---
+- name: 'Install fonts support packages (Support for extra characters like Emojis, Chinese, Japanese, etc)'
+  ansible.builtin.apt:
+    name: '{{ system_fonts_additional_character_packages }}'
+    state: present
+    install_recommends: false
