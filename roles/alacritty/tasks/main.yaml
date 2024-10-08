@@ -1,0 +1,62 @@
+---
+- name: 'Get user info for Alacritty role'
+  register: 'alacritty_role_user'
+  ansible.builtin.user:
+    name: '{{ alacritty_role_user_name }}'
+
+- name: 'Create Alacritty role work directory'
+  ansible.builtin.file:
+    path: '{{ alacritty_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Install Alacritty'
+  ansible.builtin.apt:
+    name: 'alacritty'
+    state: present
+    install_recommends: false
+
+- name: 'Create Alacritty config directory'
+  ansible.builtin.file:
+    path: '{{ alacritty_role_user.home }}/.config/alacritty'
+    state: directory
+    owner: '{{ alacritty_role_user.name }}'
+    group: '{{ alacritty_role_user.name }}'
+    mode: '0770'
+
+- name: 'Create Alacritty themes directory'
+  ansible.builtin.file:
+    path: '{{ alacritty_role_user.home }}/.config/alacritty/themes'
+    state: directory
+    owner: '{{ alacritty_role_user.name }}'
+    group: '{{ alacritty_role_user.name }}'
+    mode: '0770'
+- name: 'Copy Alacritty themes'
+  ansible.builtin.copy:
+    src: '{{ alacritty_role_files_path }}/{{ item }}'
+    dest: '{{ alacritty_role_user.home }}/.config/alacritty/themes/{{ item }}'
+    owner: '{{ alacritty_role_user.name }}'
+    group: '{{ alacritty_role_user.name }}'
+    mode: '0660'
+  loop:
+    - 'github_dark.yml'
+    - 'github_light.yml'
+
+- name: 'Copy alacritty config template files'
+  ansible.builtin.copy:
+    content: |
+      {{ alacritty_config_file_yaml }}
+    dest: '{{ alacritty_ansible_work_path }}/alacritty.yaml.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: 'Template and copy Alacritty config file'
+  ansible.builtin.template:
+    src: '{{ alacritty_ansible_work_path }}/alacritty.yaml.j2'
+    dest: '{{ alacritty_role_user.home }}/.config/alacritty/alacritty.yml'
+    owner: '{{ alacritty_role_user.name }}'
+    group: '{{ alacritty_role_user.name }}'
+    mode: '0660'
