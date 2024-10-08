@@ -58,7 +58,6 @@
     install_recommends: false
 
 - name: 'Install VSCodium extensions'
-  become: true
   become_user: '{{ vscodium_role_user.name }}'
   ansible.builtin.shell:
     cmd: '/usr/bin/codium --install-extension {{ item }}'
