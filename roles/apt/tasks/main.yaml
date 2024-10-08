@@ -21,6 +21,13 @@
   loop_control:
     loop_var: 'package'
 
+- name: 'Add extrepo support'
+  ansible.builtin.include_tasks: 'install-apt-package.yaml'
+  loop:
+    - 'extrepo'
+  loop_control:
+    loop_var: 'package'
+
 - name: 'Install APT packages'
   ansible.builtin.include_tasks: 'install-apt-package.yaml'
   loop: '{{ apt_install_packages }}'
