@@ -1,17 +1,7 @@
 ---
-- name: 'Add LibreWolf repository signing key'
-  ansible.builtin.get_url:
-    url: '{{ librewolf_apt_repository_signing_key }}'
-    dest: '/usr/share/keyrings/librewolf.gpg'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
-    force: true
-
-- name: 'Add LibreWolf repository to apt'
-  ansible.builtin.apt_repository:
-    repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/librewolf.gpg] {{ librewolf_apt_repository_url }} {{ librewolf_apt_repository_options }}'
-    state: present
+- name: 'Enable extrepo LibreWolf repository'
+  ansible.builtin.shell:
+    cmd: 'extrepo enable librewolf'
 
 - name: 'Update APT repository cache'
   ansible.builtin.apt:
