@@ -1,0 +1,3 @@
+volta_ansible_work_path: '{{ ansible_work_path }}/volta'
+
+volta_github_repository: 'volta-cli/volta'

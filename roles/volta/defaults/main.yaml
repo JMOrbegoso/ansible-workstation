@@ -1,0 +1,6 @@
+volta_global_packages:
+  - 'node'
+  - 'typescript'
+  - 'yarn'
+  - 'eslint'
+  - 'prettier'

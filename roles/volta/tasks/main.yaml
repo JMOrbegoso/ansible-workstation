@@ -1,0 +1,67 @@
+---
+- name: 'Get user info for Volta role'
+  register: 'volta_role_user'
+  ansible.builtin.user:
+    name: '{{ volta_role_user_name }}'
+
+- name: 'Create Volta role work directory'
+  ansible.builtin.file:
+    path: '{{ volta_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get Volta latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ volta_github_repository }}/releases/latest'
+    return_content: true
+  register: 'volta_version'
+
+- name: 'Download latest Volta release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ volta_github_repository }}/releases/download/{{ volta_version.json.tag_name }}/volta-{{ volta_version.json.tag_name | replace("v", "") }}-linux.tar.gz'
+    dest: '{{ volta_ansible_work_path }}/volta-linux.tar.gz'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+
+- name: 'Create Volta binary directory'
+  ansible.builtin.file:
+    path: '/opt/volta'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: 'Extract Volta package'
+  ansible.builtin.unarchive:
+    src: '{{ volta_ansible_work_path }}/volta-linux.tar.gz'
+    dest: '/opt/volta'
+    owner: 'root'
+    group: 'root'
+    remote_src: true
+
+- name: 'Create Volta symlinks'
+  ansible.builtin.file:
+    src: '/opt/volta/{{ item }}'
+    dest: '/usr/bin/{{ item }}'
+    state: link
+    owner: 'root'
+    group: 'root'
+    mode: '0777'
+  loop:
+    - 'volta-migrate'
+    - 'volta-shim'
+    - 'volta'
+
+- name: 'Running Volta setup in user profile'
+  become_user: '{{ volta_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '/usr/bin/volta setup --verbose'
+
+- name: 'Install Volta packages'
+  become_user: '{{ volta_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '/usr/bin/volta install {{ item }}'
+  loop: '{{ volta_global_packages }}'
