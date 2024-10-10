@@ -42,7 +42,7 @@ export PATH="$PATH:{{ item }}"
 # Set KUBECONFIG
 if [ -d "$HOME/.kube" ]; then
   export KUBECONFIG="$HOME/.kube/conf"
-  for config in "$HOME/.kube/ctx-"*".conf"; do
+  for config in "$HOME/.kube/"*".conf"; do
     export KUBECONFIG="$KUBECONFIG:$config"
   done
 fi

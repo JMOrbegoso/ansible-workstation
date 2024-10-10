@@ -9,3 +9,5 @@ kubectl_packages:
 
 kubectl_krew_plugins:
   - 'ctx'
+
+kubectl_context_files: []

@@ -20,3 +20,6 @@
 
 - name: 'Install  Kubectl plugins using Krew'
   ansible.builtin.include_tasks: 'krew-plugins.yaml'
+
+- name: 'Copy kubeconfig files'
+  ansible.builtin.include_tasks: 'kubeconfig.yaml'
