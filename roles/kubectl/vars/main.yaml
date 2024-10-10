@@ -1,0 +1,5 @@
+kubectl_role_files_path: '{{ role_path }}/files'
+
+kubectl_ansible_work_path: '{{ ansible_work_path }}/kubectl'
+
+kubectl_krew_github_repository: 'kubernetes-sigs/krew'

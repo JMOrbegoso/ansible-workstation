@@ -1,0 +1,9 @@
+---
+- name: 'Install Kubectl plugins using Krew'
+  become_user: '{{ kubectl_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '/usr/bin/kubectl krew install {{ item }}'
+  environment:
+    KREW_ROOT: '{{ kubectl_role_user.home }}/.krew'
+    PATH: '{{ kubectl_role_user.home }}/.krew/bin:{{ ansible_env.PATH }}'
+  loop: '{{ kubectl_krew_plugins }}'

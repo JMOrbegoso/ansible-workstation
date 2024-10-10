@@ -1,0 +1,28 @@
+---
+- name: 'Get Krew latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ kubectl_krew_github_repository }}/releases/latest'
+    return_content: true
+  register: 'kubectl_krew_version'
+
+- name: 'Download latest Krew release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ kubectl_krew_github_repository }}/releases/download/{{ kubectl_krew_version.json.tag_name }}/krew-linux_amd64.tar.gz'
+    dest: '{{ kubectl_ansible_work_path }}/krew-linux_amd64.tar.gz'
+    mode: '0660'
+    force: true
+
+- name: 'Extract Krew release tarball'
+  ansible.builtin.unarchive:
+    src: '{{ kubectl_ansible_work_path }}/krew-linux_amd64.tar.gz'
+    dest: '{{ kubectl_ansible_work_path }}'
+    owner: 'root'
+    group: 'root'
+    remote_src: true
+
+- name: 'Install Krew'
+  become_user: '{{ kubectl_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '{{ kubectl_ansible_work_path }}/krew-linux_amd64 install krew'
+  environment:
+    KREW_ROOT: '{{ kubectl_role_user.home }}/.krew'

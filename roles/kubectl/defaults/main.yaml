@@ -1,0 +1,11 @@
+kubectl_releases_list: 'https://dl.k8s.io/release/stable.txt'
+
+kubectl_apt_repository_signing_key: 'https://pkgs.k8s.io/core:/stable:/{{ kubectl_k8s_version }}/deb/Release.key'
+kubectl_apt_repository_url: https://pkgs.k8s.io/core:/stable:/{{ kubectl_k8s_version }}/deb/
+kubectl_apt_repository_options: '/'
+
+kubectl_packages:
+  - 'kubectl'
+
+kubectl_krew_plugins:
+  - 'ctx'

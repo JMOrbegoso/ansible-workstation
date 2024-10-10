@@ -1,0 +1,34 @@
+---
+- name: 'Get latest stable Kubectl version'
+  ansible.builtin.uri:
+    url: '{{ kubectl_releases_list }}'
+    return_content: true
+  register: 'kubectl_k8s_stable_version'
+
+- name: 'Normalize obtained Kubectl version'
+  ansible.builtin.set_fact:
+    kubectl_k8s_version: "{{ kubectl_k8s_stable_version.content.split('.')[:2] | join('.') }}"
+
+- name: 'Add Kubectl repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ kubectl_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/kubernetes.key'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Kubectl repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/kubernetes.key] {{ kubectl_apt_repository_url }} {{ kubectl_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Kubectl'
+  ansible.builtin.apt:
+    name: '{{ kubectl_packages }}'
+    state: present
+    install_recommends: false

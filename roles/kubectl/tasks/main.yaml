@@ -1,0 +1,22 @@
+---
+- name: 'Get user info for Kubectl role'
+  register: 'kubectl_role_user'
+  ansible.builtin.user:
+    name: '{{ kubectl_role_user_name }}'
+
+- name: 'Create Kubectl role work directory'
+  ansible.builtin.file:
+    path: '{{ kubectl_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Install Kubectl'
+  ansible.builtin.include_tasks: 'kubectl.yaml'
+
+- name: 'Install Krew'
+  ansible.builtin.include_tasks: 'krew.yaml'
+
+- name: 'Install  Kubectl plugins using Krew'
+  ansible.builtin.include_tasks: 'krew-plugins.yaml'
