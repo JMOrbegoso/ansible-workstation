@@ -1,0 +1,12 @@
+---
+- name: 'Install ALSA'
+  ansible.builtin.apt:
+    name: 'alsa-utils'
+    state: present
+    install_recommends: false
+
+- name: 'Install PulseAudio'
+  ansible.builtin.apt:
+    name: 'pulseaudio'
+    state: present
+    install_recommends: false
