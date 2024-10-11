@@ -1,0 +1,13 @@
+[
+{% for item in albert_websearch_plugin_items %}
+    {
+        "id": "{{ item.id }}",
+        "name": "{{ item.name }}",
+        "iconPath": "file:{{ albert_role_user.home }}/.local/share/albert/websearch/{{ item.id }}.png",
+        "trigger": "{{ item.trigger }}",
+        "url": "{{ item.url }}",
+        "fallback": {{ item.fallback | lower }}
+    }{% if not loop.last %},{% endif %}
+
+{% endfor %}
+]

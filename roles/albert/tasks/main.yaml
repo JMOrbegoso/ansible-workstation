@@ -1,0 +1,105 @@
+---
+- name: 'Get user info for Albert role'
+  register: 'albert_role_user'
+  ansible.builtin.user:
+    name: '{{ albert_role_user_name }}'
+
+- name: 'Add Albert repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ albert_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/albert.key'
+    mode: '0644'
+    force: true
+
+- name: 'Add Albert repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/albert.key] {{ albert_apt_repository_url }} {{ albert_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Albert'
+  ansible.builtin.apt:
+    name: '{{ albert_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Create Albert configuration directories'
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0770'
+  loop:
+    - '{{ albert_role_user.home }}/.config/albert'
+    - '{{ albert_role_user.home }}/.local/share/albert'
+
+- name: 'Template and copy albert.conf file'
+  ansible.builtin.template:
+    src: '{{ albert_role_templates_path }}/albert.conf.j2'
+    dest: '{{ albert_role_user.home }}/.config/albert/config'
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0660'
+
+- name: 'Create Albert chromium plugin directory'
+  ansible.builtin.file:
+    path: '{{ albert_role_user.home }}/.config/albert/chromium'
+    state: directory
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0770'
+  when: 'albert_chromium_plugin_enabled'
+
+- name: 'Template and copy Albert bookmarks json file'
+  ansible.builtin.template:
+    src: '{{ albert_role_templates_path }}/bookmarks.json.j2'
+    dest: '{{ albert_role_user.home }}/.config/albert/chromium/bookmarks.json'
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0660'
+  when: 'albert_chromium_plugin_enabled'
+
+- name: 'Create Albert websearch plugin configuration directories'
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0770'
+  loop:
+    - '{{ albert_role_user.home }}/.config/albert/websearch'
+    - '{{ albert_role_user.home }}/.local/share/albert/websearch'
+  when: 'albert_websearch_plugin_enabled'
+
+- name: 'Template and copy Albert websearch engines json file'
+  ansible.builtin.template:
+    src: '{{ albert_role_templates_path }}/websearch.json.j2'
+    dest: '{{ albert_role_user.home }}/.config/albert/websearch/engines.json'
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0660'
+  when: 'albert_websearch_plugin_enabled'
+
+- name: 'Copy Albert websearch plugin icons'
+  ansible.builtin.copy:
+    src: '{{ albert_shared_files_path }}/{{ item.fileName }}'
+    dest: '{{ albert_role_user.home }}/.local/share/albert/websearch/{{ item.id }}.png'
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0660'
+  loop: '{{ albert_websearch_plugin_items }}'
+  when: 'albert_websearch_plugin_enabled'
+
+- name: 'Run Albert on user login'
+  ansible.builtin.copy:
+    src: '/usr/share/applications/albert.desktop'
+    dest: '{{ albert_role_user.home }}/.config/autostart/albert.desktop'
+    owner: '{{ albert_role_user.name }}'
+    group: '{{ albert_role_user.name }}'
+    mode: '0660'
+    force: true
+    remote_src: true

@@ -1,0 +1,50 @@
+[General]
+frontend=widgetsboxmodel
+hotkey={{ albert_hotkey }}
+showTray=true
+telemetry=false
+
+[qmlboxmodel]
+windowPosition=@Point(0 0)
+
+[widgetsboxmodel]
+alwaysOnTop=true
+clearOnHide=true
+clientShadow=true
+darkTheme=Default System Palette
+displayScrollbar=false
+followCursor=true
+hideOnFocusLoss=true
+historySearch=true
+itemCount=5
+lightTheme=Default System Palette
+quitOnClose=false
+showCentered=true
+showFallbacksOnEmpty=true
+systemShadow=true
+theme=Arc Dark Blue
+windowPosition=@Point(0 0)
+
+[applications]
+enabled=true
+terminal=alacritty
+
+[applications_xdg]
+enabled=true
+
+[calculator_qalculate]
+enabled=true
+
+[urlhandler]
+enabled=true
+
+{% if albert_chromium_plugin_enabled %}
+[chromium]
+enabled=true
+bookmarks_path={{ albert_role_user.home }}/.config/albert/chromium/bookmarks.json
+{% endif %}
+
+{% if albert_websearch_plugin_enabled %}
+[websearch]
+enabled=true
+{% endif %}

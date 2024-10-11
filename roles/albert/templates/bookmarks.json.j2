@@ -1,0 +1,18 @@
+{
+  "roots": {
+    "bookmark_bar": {
+      "name": "Bookmarks",
+      "type": "folder",
+      "children": [
+{% for item in albert_chromium_plugin_bookmarks %}
+        {
+          "name": "{{ item.name }}",
+          "type": "url",
+          "url": "{{ item.url }}"
+        }{% if not loop.last %},{% endif %}
+
+{% endfor %}
+      ]
+    }
+  }
+}
