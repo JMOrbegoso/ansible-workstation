@@ -1,0 +1,25 @@
+---
+- name: 'Install Ansible using pipx'
+  community.general.pipx:
+    name: '{{ ansible_pipx_package }}'
+    state: install
+    install_deps: true
+  environment:
+    PIPX_HOME: '/opt/pipx'
+    PIPX_BIN_DIR: '/usr/local/bin'
+    PIPX_MAN_DIR: '/usr/local/share/man'
+
+- name: 'Install Ansible tools using pipx'
+  community.general.pipx:
+    name: '{{ ansible_pipx_package }}'
+    state: inject
+    install_deps: '{{ tool.install_deps }}'
+    install_apps: '{{ tool.install_deps }}'
+    inject_packages: '{{ tool.name }}'
+  environment:
+    PIPX_HOME: '/opt/pipx'
+    PIPX_BIN_DIR: '/usr/local/bin'
+    PIPX_MAN_DIR: '/usr/local/share/man'
+  loop: '{{ ansible_tools_pipx_packages }}'
+  loop_control:
+    loop_var: 'tool'

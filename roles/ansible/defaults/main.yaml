@@ -1,0 +1,9 @@
+ansible_pipx_package: 'ansible'
+
+ansible_tools_pipx_packages:
+  - name: 'ansible-lint'
+    install_deps: true
+  - name: 'jmespath'
+    install_deps: true
+  - name: 'passlib'
+    install_deps: false
