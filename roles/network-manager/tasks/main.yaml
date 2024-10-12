@@ -31,3 +31,12 @@
   ansible.builtin.systemd_service:
     name: 'NetworkManager.service'
     enabled: true
+
+- name: 'Copy NetworkManager connection files'
+  ansible.builtin.copy:
+    src: '{{ network_manager_connection_shared_files_path }}/{{ item }}'
+    dest: '/etc/NetworkManager/system-connections/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+  loop: '{{ network_manager_connection_files }}'

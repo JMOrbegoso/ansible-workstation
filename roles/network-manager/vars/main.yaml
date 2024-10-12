@@ -1,0 +1,1 @@
+network_manager_connection_shared_files_path: '{{ playbook_dir }}/shared_files/network-manager'
