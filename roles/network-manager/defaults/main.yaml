@@ -1,0 +1,13 @@
+network_manager_packages:
+  - 'network-manager'
+  - 'network-manager-gnome'
+
+network_manager_conf_file_content: |
+  [main]
+  plugins=ifupdown,keyfile
+
+  [ifupdown]
+  managed=true
+
+  [device]
+  wifi.scan-rand-mac-address=no
