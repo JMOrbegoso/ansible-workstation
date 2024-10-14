@@ -1,0 +1,6 @@
+---
+- name: 'Install Xfce4 notifications packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_notifications_packages }}'
+    state: present
+    install_recommends: false
