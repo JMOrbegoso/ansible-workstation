@@ -1,0 +1,8 @@
+---
+- name: 'Get user info for Xfce4 role'
+  register: 'xfce4_role_user'
+  ansible.builtin.user:
+    name: '{{ xfce4_role_user_name }}'
+
+- name: 'Install & configure Xfce4'
+  ansible.builtin.include_tasks: 'xfce4/main.yaml'

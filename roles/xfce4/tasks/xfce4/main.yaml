@@ -1,0 +1,6 @@
+---
+- name: 'Install the base of Xfce4'
+  ansible.builtin.include_tasks: 'base.yaml'
+
+- name: 'Install helpers for Xfce4'
+  ansible.builtin.include_tasks: 'helpers.yaml'

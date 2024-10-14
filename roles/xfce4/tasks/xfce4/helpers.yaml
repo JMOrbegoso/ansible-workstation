@@ -1,0 +1,6 @@
+---
+- name: 'Install Xfce4 helper packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_helper_packages }}'
+    state: present
+    install_recommends: false
