@@ -1,0 +1,12 @@
+---
+- name: 'Install Xfwm4'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Set Xfce4 window manager'
+  ansible.builtin.include_tasks: 'set-xfce4-window-manager.yaml'
+
+- name: 'Configure Xfwm4'
+  ansible.builtin.include_tasks: 'configuration.yaml'
+
+- name: 'Configure Xfwm4 keyboard shortcuts'
+  ansible.builtin.include_tasks: 'keyboard-shortcuts.yaml'

@@ -1,0 +1,11 @@
+---
+- name: 'Configure Xfwm4'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfwm4'
+    property: '{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_xfwm4_settings }}'

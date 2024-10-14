@@ -1,0 +1,29 @@
+---
+- name: 'Get Xfwm4 keyboard shortcuts'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf_info:
+    channel: 'xfce4-keyboard-shortcuts'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  register: 'xfce4_keyboard_shortcuts_current_settings'
+
+- name: 'Reset Xfwm4 keyboard shortcuts'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-keyboard-shortcuts'
+    property: '{{ item }}'
+    state: absent
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: "{{ xfce4_keyboard_shortcuts_current_settings.properties | select('match', '^/xfwm4/custom.*$') | list }}"
+
+- name: 'Configure Xfwm4 keyboard shortcuts'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-keyboard-shortcuts'
+    property: '/xfwm4/custom/{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_xfwm4_keyboard_shortcuts }}'

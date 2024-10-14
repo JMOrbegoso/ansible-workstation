@@ -1,0 +1,6 @@
+---
+- name: 'Install Xfwm4'
+  ansible.builtin.apt:
+    name: '{{ xfce4_xfwm4_packages }}'
+    state: present
+    install_recommends: false

@@ -1,0 +1,12 @@
+---
+- name: 'Configure Xfwm4 as default Xfce4 window manager'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-session'
+    property: '/sessions/Failsafe/Client0_Command'
+    value_type: 'string'
+    value:
+      - 'xfwm4'
+    force_array: true
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
