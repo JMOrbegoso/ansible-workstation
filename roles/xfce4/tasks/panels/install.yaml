@@ -1,0 +1,14 @@
+---
+- name: 'Install Xfce4 panel packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_panels_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Create Xfce4 panel directory'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/.config/xfce4/panel'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0770'

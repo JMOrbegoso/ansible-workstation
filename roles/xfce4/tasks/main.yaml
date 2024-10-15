@@ -12,3 +12,6 @@
 
 - name: 'Install & configure Xfce4 notifications'
   ansible.builtin.include_tasks: 'notifications/main.yaml'
+
+- name: 'Install & configure Xfce4 panels'
+  ansible.builtin.include_tasks: 'panels/main.yaml'

@@ -1,0 +1,33 @@
+---
+- name: 'Set Xfce4 panel 1 settings'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-panel'
+    property: '/panels/panel-1/{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_panel_1_settings }}'
+
+- name: 'Set Xfce4 panel 1 plugins'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-panel'
+    property: '/panels/panel-1/plugin-ids'
+    value_type: int
+    value: '{{ xfce4_panel_1_plugins }}'
+    force_array: true
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+
+- name: 'Configure Xfce4 panel 1 plugins'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-panel'
+    property: '/plugins/{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_panel_1_plugins_settings }}'

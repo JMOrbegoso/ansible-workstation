@@ -1,0 +1,12 @@
+---
+- name: 'Install Xfce4 panels'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Configure Xfce4 panels'
+  ansible.builtin.include_tasks: 'configuration.yaml'
+
+- name: 'Configure Xfce4 panel 0 (Deskbar)'
+  ansible.builtin.include_tasks: 'panel-0.yaml'
+
+- name: 'Configure Xfce4 panel 1 (Taskbar)'
+  ansible.builtin.include_tasks: 'panel-1.yaml'

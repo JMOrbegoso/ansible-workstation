@@ -1,0 +1,42 @@
+---
+- name: 'Get Xfce4 panels settings'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf_info:
+    channel: 'xfce4-panel'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  register: 'xfce4_panels_current_settings'
+
+- name: 'Reset Xfce4 panels settings'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-panel'
+    property: '{{ item }}'
+    state: absent
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: "{{ xfce4_panels_current_settings.properties | select('match', '^/panels.*$') | list }}"
+
+- name: 'Set Xfce4 panels global settings'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-panel'
+    property: '/{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_panels_global_settings }}'
+
+- name: 'Create Xfce4 panels'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-panel'
+    property: '/panels'
+    value_type: int
+    value:
+      - 0
+      - 1
+    force_array: true
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
