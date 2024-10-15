@@ -4,3 +4,11 @@
     name: '{{ xfce4_base_packages }}'
     state: present
     install_recommends: false
+
+- name: 'Create Xfce4 configuration directory'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/.config/xfce4'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0770'
