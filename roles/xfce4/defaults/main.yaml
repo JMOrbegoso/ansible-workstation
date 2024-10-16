@@ -837,3 +837,10 @@ xfce4_panel_1_plugins_settings:
   - property: 'plugin-16/style'
     value_type: 'int'
     value: '0'
+
+##################################################
+############# Ristretto Image Viewer #############
+##################################################
+
+xfce4_ristretto_packages:
+  - 'ristretto'

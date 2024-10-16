@@ -1,6 +1,6 @@
 ---
 - name: 'Install Ristretto Image Viewer'
   ansible.builtin.apt:
-    name: '{{ ristretto_packages }}'
+    name: '{{ xfce4_ristretto_packages }}'
     state: present
     install_recommends: false
