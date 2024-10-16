@@ -1,0 +1,9 @@
+---
+- name: 'Install Mousepad'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Configure Mousepad'
+  ansible.builtin.include_tasks: 'configuration.yaml'
+
+- name: 'Configure Mousepad keyboard shortcuts'
+  ansible.builtin.include_tasks: 'keyboard-shortcuts.yaml'

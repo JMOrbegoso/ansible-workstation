@@ -1,0 +1,14 @@
+---
+- name: 'Create Mousepad configuration directories'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/.config/Mousepad'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0770'
+
+- name: 'Configure Mousepad'
+  become_user: '{{ xfce4_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: 'gsettings set {{ item }}'
+  loop: '{{ xfce4_mousepad_gsettings }}'

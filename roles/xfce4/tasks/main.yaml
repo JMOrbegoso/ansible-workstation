@@ -21,3 +21,6 @@
 
 - name: 'Install & configure Xfce4 screenshooter'
   ansible.builtin.include_tasks: 'screenshooter/main.yaml'
+
+- name: 'Install & configure Mousepad'
+  ansible.builtin.include_tasks: 'mousepad/main.yaml'

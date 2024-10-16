@@ -1,0 +1,8 @@
+---
+- name: 'Copy Mousepad accels.scm file'
+  ansible.builtin.template:
+    src: '{{ xfce4_shared_files_path }}/mousepad-accels.scm'
+    dest: '{{ xfce4_role_user.home }}/.config/Mousepad/accels.scm'
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0660'

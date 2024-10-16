@@ -1,0 +1,12 @@
+---
+- name: 'Install Mousepad packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_mousepad_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Install spellcheck dictionaries for Mousepad'
+  ansible.builtin.apt:
+    name: '{{ xfce4_mousepad_dictionaries }}'
+    state: present
+    install_recommends: false
