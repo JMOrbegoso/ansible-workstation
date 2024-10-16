@@ -1,0 +1,14 @@
+---
+- name: 'Install Xfce4-Screenshooter packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_screenshooter_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Create screenshoots directory'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/Pictures/Screenshots'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0755'

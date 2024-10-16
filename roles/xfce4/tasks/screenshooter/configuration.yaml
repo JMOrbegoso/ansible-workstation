@@ -1,0 +1,8 @@
+---
+- name: 'Template and copy xfce4-screenshooter configuration file'
+  ansible.builtin.template:
+    src: '{{ xfce4_role_templates_path }}/xfce4-screenshooter.j2'
+    dest: '{{ xfce4_role_user.home }}/.config/xfce4/xfce4-screenshooter'
+    owner: '{{ xfce4_role_user.uid }}'
+    group: '{{ xfce4_role_user.uid }}'
+    mode: '0644'

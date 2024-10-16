@@ -844,3 +844,10 @@ xfce4_panel_1_plugins_settings:
 
 xfce4_ristretto_packages:
   - 'ristretto'
+
+##################################################
+############### Xfce4-Screenshooter ##############
+##################################################
+
+xfce4_screenshooter_packages:
+  - 'xfce4-screenshooter'

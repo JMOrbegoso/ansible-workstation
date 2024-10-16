@@ -1,0 +1,6 @@
+---
+- name: 'Install Xfce4 Screenshooter'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Configure Xfce4 Screenshooter'
+  ansible.builtin.include_tasks: 'configuration.yaml'
