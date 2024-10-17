@@ -4,3 +4,6 @@
 
 - name: 'Install helpers for Xfce4'
   ansible.builtin.include_tasks: 'helpers.yaml'
+
+- name: 'Configure Xfce4 default applications'
+  ansible.builtin.include_tasks: 'default-applications.yaml'

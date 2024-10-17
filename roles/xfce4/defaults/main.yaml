@@ -13,6 +13,30 @@ xfce4_helper_packages:
   - 'xfce4-clipman'
   - 'xfce4-taskmanager'
 
+xfce4_default_terminal_emulator_desktop_file: |
+  [Desktop Entry]
+  NoDisplay=true
+  Version=1.0
+  Encoding=UTF-8
+  Type=X-XFCE-Helper
+  X-XFCE-Category=TerminalEmulator
+  X-XFCE-CommandsWithParameter=/usr/bin/alacritty "%s"
+  Icon=Alacritty
+  Name=Alacritty
+  X-XFCE-Commands=/usr/bin/alacritty
+
+xfce4_default_web_browser_desktop_file: |
+  [Desktop Entry]
+  NoDisplay=true
+  Version=1.0
+  Encoding=UTF-8
+  Type=X-XFCE-Helper
+  X-XFCE-Category=WebBrowser
+  X-XFCE-CommandsWithParameter=/usr/bin/librewolf "%s"
+  Icon=LibreWolf
+  Name=LibreWolf Web Browser
+  X-XFCE-Commands=/usr/bin/librewolf
+
 ##################################################
 ###################### Xfwm4 #####################
 ##################################################

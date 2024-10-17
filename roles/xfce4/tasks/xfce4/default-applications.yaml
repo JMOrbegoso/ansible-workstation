@@ -1,0 +1,39 @@
+---
+- name: 'Create required directories for default applications'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/.local/share/xfce4/helpers'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0770'
+
+- name: 'Set default terminal emulator'
+  ansible.builtin.copy:
+    content: |
+      {{ xfce4_default_terminal_emulator_desktop_file }}
+    dest: '{{ xfce4_role_user.home }}/.local/share/xfce4/helpers/custom-TerminalEmulator.desktop'
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0664'
+    force: true
+
+- name: 'Set default web browser'
+  ansible.builtin.copy:
+    content: |
+      {{ xfce4_default_web_browser_desktop_file }}
+    dest: '{{ xfce4_role_user.home }}/.local/share/xfce4/helpers/custom-WebBrowser.desktop'
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0664'
+    force: true
+
+- name: 'Set default applications in helpers.rc'
+  ansible.builtin.copy:
+    content: |
+      WebBrowser=custom-WebBrowser
+      TerminalEmulator=custom-TerminalEmulator
+    dest: '{{ xfce4_role_user.home }}/.config/xfce4/helpers.rc'
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0664'
+    force: true
