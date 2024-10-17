@@ -24,3 +24,6 @@
 
 - name: 'Install & configure Mousepad'
   ansible.builtin.include_tasks: 'mousepad/main.yaml'
+
+- name: 'Install & configure Thunar'
+  ansible.builtin.include_tasks: 'thunar/main.yaml'

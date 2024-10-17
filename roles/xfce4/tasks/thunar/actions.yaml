@@ -1,0 +1,9 @@
+---
+- name: 'Copy Thunar File Manager uca.xml file'
+  ansible.builtin.copy:
+    src: '{{ xfce4_shared_files_path }}/thunar-uca.xml'
+    dest: '{{ xfce4_role_user.home }}/.config/Thunar/uca.xml'
+    owner: '{{ xfce4_role_user.uid }}'
+    group: '{{ xfce4_role_user.uid }}'
+    mode: '0600'
+    force: true

@@ -1,0 +1,6 @@
+---
+- name: 'Install Thunar File Manager packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_thunar_packages }}'
+    state: present
+    install_recommends: false

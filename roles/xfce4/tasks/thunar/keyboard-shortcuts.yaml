@@ -1,0 +1,9 @@
+---
+- name: 'Copy Thunar File Manager accels.scm file'
+  ansible.builtin.copy:
+    src: '{{ xfce4_shared_files_path }}/thunar-accels.scm'
+    dest: '{{ xfce4_role_user.home }}/.config/Thunar/accels.scm'
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0644'
+    force: true

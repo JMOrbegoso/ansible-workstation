@@ -1,0 +1,16 @@
+---
+- name: 'Create Thunar File Manager directories'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/.config/gtk-3.0'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0755'
+
+- name: 'Template and copy Thunar File Manager bookmarks'
+  ansible.builtin.template:
+    src: '{{ xfce4_role_templates_path }}/thunar-bookmarks.j2'
+    dest: '{{ xfce4_role_user.home }}/.config/gtk-3.0/bookmarks'
+    owner: '{{ xfce4_role_user.uid }}'
+    group: '{{ xfce4_role_user.uid }}'
+    mode: '0644'

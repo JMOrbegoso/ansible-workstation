@@ -929,3 +929,29 @@ xfce4_mousepad_gsettings:
   - 'org.xfce.mousepad.state.window maximized false'
   - 'org.xfce.mousepad.state.window top 0'
   - 'org.xfce.mousepad.plugins.gspell.preferences default-language "{{ locale }}"'
+
+##################################################
+##################### Thunar #####################
+##################################################
+
+xfce4_thunar_packages:
+  - 'thunar-archive-plugin'
+  - 'thunar-data'
+  - 'thunar-media-tags-plugin'
+  - 'thunar-volman'
+  - 'thunar'
+
+xfce4_thunar_settings:
+  - property: '/misc-middle-click-in-tab'
+    value_type: 'bool'
+    value: 'true'
+  - property: '/misc-single-click'
+    value_type: 'bool'
+    value: 'false'
+  - property: '/last-location-bar'
+    value_type: 'string'
+    value: 'ThunarLocationButtons'
+
+xfce4_thunar_bookmarks:
+  - name: 'Downloads'
+    path: '{{ xfce4_role_user.home }}/Downloads'

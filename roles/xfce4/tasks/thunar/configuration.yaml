@@ -1,0 +1,19 @@
+---
+- name: 'Create Thunar File Manager directories'
+  ansible.builtin.file:
+    path: '{{ xfce4_role_user.home }}/.config/Thunar'
+    state: directory
+    owner: '{{ xfce4_role_user.name }}'
+    group: '{{ xfce4_role_user.name }}'
+    mode: '0770'
+
+- name: 'Configure Thunar File Manager'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'thunar'
+    property: '{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_thunar_settings }}'

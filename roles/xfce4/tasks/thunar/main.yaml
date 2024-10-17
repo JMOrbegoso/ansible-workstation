@@ -1,0 +1,15 @@
+---
+- name: 'Install Thunar File Manager'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Configure Thunar File Manager'
+  ansible.builtin.include_tasks: 'configuration.yaml'
+
+- name: 'Configure Thunar File Manager keyboard shortcuts'
+  ansible.builtin.include_tasks: 'keyboard-shortcuts.yaml'
+
+- name: 'Configure Thunar File Manager custom actions'
+  ansible.builtin.include_tasks: 'actions.yaml'
+
+- name: 'Configure Thunar File Manager bookmarks'
+  ansible.builtin.include_tasks: 'bookmarks.yaml'
