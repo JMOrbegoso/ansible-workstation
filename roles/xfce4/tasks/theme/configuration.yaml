@@ -1,0 +1,31 @@
+---
+- name: 'Set Orchis theme'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xsettings'
+    property: '/Net/ThemeName'
+    value_type: 'string'
+    value: 'Orchis-Light'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+
+- name: 'Set Papirus icons'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xsettings'
+    property: '/Net/IconThemeName'
+    value_type: 'string'
+    value: 'Papirus'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+
+- name: 'Configure xfce4 theme'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xsettings'
+    property: '{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_theme_settings }}'

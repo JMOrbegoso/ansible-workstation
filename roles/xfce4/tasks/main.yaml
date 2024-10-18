@@ -7,6 +7,9 @@
 - name: 'Install & configure Xfce4'
   ansible.builtin.include_tasks: 'xfce4/main.yaml'
 
+- name: 'Install & configure Xfce4 theme'
+  ansible.builtin.include_tasks: 'theme/main.yaml'
+
 - name: 'Install & configure Xfwm4'
   ansible.builtin.include_tasks: 'xfwm4/main.yaml'
 

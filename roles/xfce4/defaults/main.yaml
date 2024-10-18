@@ -38,6 +38,83 @@ xfce4_default_web_browser_desktop_file: |
   X-XFCE-Commands=/usr/bin/librewolf
 
 ##################################################
+###################### Theme #####################
+##################################################
+
+xfce4_theme_orchis_packages:
+  - 'orchis-gtk-theme'
+
+xfce4_theme_papirus_packages:
+  - 'papirus-icon-theme'
+
+xfce4_theme_settings:
+  - property: '/Gtk/FontName'
+    value_type: 'string'
+    value: 'Hack Nerd Font 10'
+  - property: '/Gtk/MonospaceFontName'
+    value_type: 'string'
+    value: 'Hack Nerd Font Mono 10'
+
+  - property: '/Gtk/ButtonImages'
+    value_type: 'bool'
+    value: 'true'
+  - property: '/Gtk/CanChangeAccels'
+    value_type: 'bool'
+    value: 'false'
+  - property: '/Gtk/DialogsUseHeader'
+    value_type: 'bool'
+    value: 'false'
+  - property: '/Gtk/MenuImages'
+    value_type: 'bool'
+    value: 'true'
+  - property: '/Net/CursorBlink'
+    value_type: 'bool'
+    value: 'true'
+  - property: '/Net/EnableEventSounds'
+    value_type: 'bool'
+    value: 'false'
+  - property: '/Net/EnableInputFeedbackSounds'
+    value_type: 'bool'
+    value: 'false'
+  - property: '/Xfce/SyncThemes'
+    value_type: 'bool'
+    value: 'true'
+
+  - property: '/Gdk/WindowScalingFactor'
+    value_type: 'int'
+    value: '1'
+  - property: '/Gtk/CursorThemeSize'
+    value_type: 'int'
+    value: '0'
+  - property: '/Gtk/ToolbarIconSize'
+    value_type: 'int'
+    value: '3'
+  - property: '/Net/CursorBlinkTime'
+    value_type: 'int'
+    value: '1200'
+  - property: '/Net/DndDragThreshold'
+    value_type: 'int'
+    value: '8'
+  - property: '/Net/DoubleClickDistance'
+    value_type: 'int'
+    value: '5'
+  - property: '/Net/DoubleClickTime'
+    value_type: 'int'
+    value: '400'
+  - property: '/Xfce/LastCustomDPI'
+    value_type: 'int'
+    value: '96'
+  - property: '/Xft/Antialias'
+    value_type: 'int'
+    value: '1'
+  - property: '/Xft/DPI'
+    value_type: 'int'
+    value: '96'
+  - property: '/Xft/Hinting'
+    value_type: 'int'
+    value: '0'
+
+##################################################
 ###################### Xfwm4 #####################
 ##################################################
 

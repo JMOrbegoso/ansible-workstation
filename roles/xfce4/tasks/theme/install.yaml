@@ -1,0 +1,12 @@
+---
+- name: 'Install Orchis theme packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_theme_orchis_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Install Papirus theme packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_theme_papirus_packages }}'
+    state: present
+    install_recommends: false
