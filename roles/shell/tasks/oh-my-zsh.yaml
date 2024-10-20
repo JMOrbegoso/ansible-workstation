@@ -14,7 +14,7 @@
 
 - name: 'Install oh-my-zsh'
   become_user: '{{ shell_role_user.name }}'
-  ansible.builtin.script: '{{ shell_ansible_work_path }}/ohmyzsh-install.sh  --unattended --skip-chsh --keep-zshrc'
+  ansible.builtin.shell: '{{ shell_ansible_work_path }}/ohmyzsh-install.sh  --unattended --skip-chsh --keep-zshrc'
   args:
     creates: '{{ shell_role_user.home }}/.shell/oh-my-zsh'
   environment:
