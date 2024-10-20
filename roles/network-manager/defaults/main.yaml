@@ -11,3 +11,5 @@ network_manager_conf_file_content: |
 
   [device]
   wifi.scan-rand-mac-address=no
+
+network_manager_connection_files: []
