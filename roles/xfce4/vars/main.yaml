@@ -1,0 +1,3 @@
+xfce4_role_templates_path: '{{ role_path }}/templates'
+
+xfce4_shared_files_path: '{{ playbook_dir }}/shared_files/xfce4'
