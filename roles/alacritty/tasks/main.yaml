@@ -44,18 +44,9 @@
     - 'github_dark.yml'
     - 'github_light.yml'
 
-- name: 'Copy alacritty config template files'
+- name: 'Copy Alacritty config file'
   ansible.builtin.copy:
-    content: |
-      {{ alacritty_config_file_yaml }}
-    dest: '{{ alacritty_ansible_work_path }}/alacritty.yaml.j2'
-    owner: 'root'
-    group: 'root'
-    mode: '0644'
-
-- name: 'Template and copy Alacritty config file'
-  ansible.builtin.template:
-    src: '{{ alacritty_ansible_work_path }}/alacritty.yaml.j2'
+    src: '{{ alacritty_shared_files_path }}/alacritty.yaml'
     dest: '{{ alacritty_role_user.home }}/.config/alacritty/alacritty.yml'
     owner: '{{ alacritty_role_user.name }}'
     group: '{{ alacritty_role_user.name }}'
