@@ -55,4 +55,5 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
+    remote_src: true
   with_items: '{{ hack_nerd_font_files.files }}'
