@@ -7,6 +7,22 @@ users:
     has_sudo_privileges: true
     ssh_authorized_keys: []
 
-# This variable should be declarated in an ansible-vault
+# This variable is sensitive, so it must be declared in an ansible-vault
 user_passwords:
   tux: '123456'
+
+alacritty_role_user_name: '{{ users.admin.name }}'
+
+albert_role_user_name: '{{ users.admin.name }}'
+
+fastfetch_role_user_name: '{{ users.admin.name }}'
+
+kubectl_role_user_name: '{{ users.admin.name }}'
+
+shell_role_user_name: '{{ users.admin.name }}'
+
+volta_role_user_name: '{{ users.admin.name }}'
+
+vscodium_role_user_name: '{{ users.admin.name }}'
+
+xfce4_role_user_name: '{{ users.admin.name }}'
