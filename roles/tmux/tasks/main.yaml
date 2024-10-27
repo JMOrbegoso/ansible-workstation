@@ -1,4 +1,9 @@
 ---
+- name: 'Get user info for Tmux role'
+  register: 'tmux_role_user'
+  ansible.builtin.user:
+    name: '{{ tmux_role_user_name }}'
+
 - name: 'Install Tmux'
   ansible.builtin.apt:
     name: 'tmux'
@@ -7,8 +12,8 @@
 
 - name: 'Configure Tmux'
   ansible.builtin.copy:
-    src: '{{ tmux_role_files_path }}/tmux.conf'
-    dest: '/etc/tmux.conf'
-    owner: 'root'
-    group: 'root'
+    src: '{{ tmux_shared_files_path }}/{{ tmux_config_filename }}'
+    dest: '{{ tmux_role_user.home }}/.tmux.conf'
+    owner: '{{ tmux_role_user.name }}'
+    group: '{{ tmux_role_user.name }}'
     mode: '0644'

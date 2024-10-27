@@ -1,1 +1,1 @@
-tmux_role_files_path: '{{ role_path }}/files'
+tmux_shared_files_path: '{{ playbook_dir }}/shared_files/tmux'
