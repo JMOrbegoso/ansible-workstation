@@ -17,8 +17,7 @@
 
 - name: 'Copy VSCodium settings.json'
   ansible.builtin.copy:
-    content: |
-      {{ vscodium_settings_json }}
+    src: '{{ vscodium_shared_files_path }}/{{ vscodium_settings_filename }}'
     dest: '{{ vscodium_role_user.home }}/.config/VSCodium/User/settings.json'
     owner: '{{ vscodium_role_user.name }}'
     group: '{{ vscodium_role_user.name }}'
@@ -26,8 +25,7 @@
 
 - name: 'Copy VSCodium keybindings.json'
   ansible.builtin.copy:
-    content: |
-      {{ vscodium_keybindings_json }}
+    src: '{{ vscodium_shared_files_path }}/{{ vscodium_keybindings_filename }}'
     dest: '{{ vscodium_role_user.home }}/.config/VSCodium/User/keybindings.json'
     owner: '{{ vscodium_role_user.name }}'
     group: '{{ vscodium_role_user.name }}'

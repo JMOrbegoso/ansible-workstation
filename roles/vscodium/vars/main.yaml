@@ -1,0 +1,1 @@
+vscodium_shared_files_path: '{{ playbook_dir }}/shared_files/vscodium'
