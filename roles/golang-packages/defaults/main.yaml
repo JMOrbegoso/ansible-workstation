@@ -1,0 +1,5 @@
+golang_packages:
+  - 'github.com/go-delve/delve/cmd/dlv@latest' # Golang Analysis tool
+  - 'github.com/ramya-rao-a/go-outline@latest' # Requeried for golang develpment
+  - 'golang.org/x/tools/gopls@latest' # VSCode intellisense
+  - 'honnef.co/go/tools/cmd/staticcheck@latest' # Golang Analysis tool

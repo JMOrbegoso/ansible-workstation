@@ -1,0 +1,11 @@
+---
+- name: 'Get user info for Golang packages role'
+  register: 'golang_packages_role_user'
+  ansible.builtin.user:
+    name: '{{ golang_packages_role_user_name }}'
+
+- name: 'Install Golang packages'
+  ansible.builtin.include_tasks: 'install-package.yaml'
+  loop: '{{ golang_packages }}'
+  loop_control:
+    loop_var: 'golang_package'

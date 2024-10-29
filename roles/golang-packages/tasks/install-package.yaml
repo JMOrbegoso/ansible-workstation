@@ -1,0 +1,9 @@
+---
+- name: 'Install Golang package: {{ golang_package }}'
+  become_user: '{{ golang_packages_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: 'go install {{ golang_package }}'
+  environment:
+    GOPATH: '{{ golang_packages_role_user.home }}/.go'
+    GOBIN: '{{ golang_packages_role_user.home }}/.go/bin'
+    PATH: '$PATH:/usr/local/go/bin'

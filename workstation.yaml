@@ -25,6 +25,7 @@
     - role: 'dotnet-tools'
     - role: 'fastfetch'
     - role: 'golang'
+    - role: 'golang-packages'
     - role: 'helm'
     - role: 'hugo'
     - role: 'kubectl'
