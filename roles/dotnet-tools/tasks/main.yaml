@@ -1,0 +1,11 @@
+---
+- name: 'Get user info for Dotnet tools role'
+  register: 'dotnet_tools_role_user'
+  ansible.builtin.user:
+    name: '{{ dotnet_tools_role_user_name }}'
+
+- name: 'Install Dotnet tools'
+  ansible.builtin.include_tasks: 'install-tool.yaml'
+  loop: '{{ dotnet_tools }}'
+  loop_control:
+    loop_var: 'dotnet_tool'

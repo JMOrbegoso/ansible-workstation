@@ -15,6 +15,8 @@ alacritty_role_user_name: '{{ users.admin.name }}'
 
 albert_role_user_name: '{{ users.admin.name }}'
 
+dotnet_tools_role_user_name: '{{ users.admin.name }}'
+
 fastfetch_role_user_name: '{{ users.admin.name }}'
 
 kubectl_role_user_name: '{{ users.admin.name }}'

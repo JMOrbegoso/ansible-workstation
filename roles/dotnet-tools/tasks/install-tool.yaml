@@ -1,0 +1,5 @@
+---
+- name: 'Install Dotnet tool: {{ dotnet_tool }}'
+  become_user: '{{ dotnet_tools_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: 'dotnet tool install --global {{ dotnet_tool }}'

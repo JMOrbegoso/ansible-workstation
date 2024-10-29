@@ -22,6 +22,7 @@
     - role: 'checksum-utils'
     - role: 'docker'
     - role: 'dotnet'
+    - role: 'dotnet-tools'
     - role: 'fastfetch'
     - role: 'golang'
     - role: 'helm'
