@@ -30,3 +30,6 @@
 
 - name: 'Install & configure Thunar'
   ansible.builtin.include_tasks: 'thunar/main.yaml'
+
+- name: 'Install & configure Tumbler'
+  ansible.builtin.include_tasks: 'tumbler/main.yaml'

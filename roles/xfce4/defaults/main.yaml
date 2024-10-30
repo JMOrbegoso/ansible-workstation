@@ -1056,3 +1056,12 @@ xfce4_thunar_settings:
 xfce4_thunar_bookmarks:
   - name: 'Downloads'
     path: '{{ xfce4_role_user.home }}/Downloads'
+
+##################################################
+##################### Tumbler ####################
+##################################################
+
+xfce4_tumbler_packages:
+  - 'tumbler-common'
+  - 'tumbler-plugins-extra'
+  - 'tumbler'

@@ -1,0 +1,6 @@
+---
+- name: 'Install Tumbler'
+  ansible.builtin.apt:
+    name: '{{ xfce4_tumbler_packages }}'
+    state: present
+    install_recommends: false
