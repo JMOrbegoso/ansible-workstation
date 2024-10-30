@@ -1,0 +1,6 @@
+---
+- name: 'Install Xfce4 power-manager packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_power_manager_packages }}'
+    state: present
+    install_recommends: false

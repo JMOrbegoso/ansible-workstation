@@ -33,3 +33,6 @@
 
 - name: 'Install & configure Tumbler'
   ansible.builtin.include_tasks: 'tumbler/main.yaml'
+
+- name: 'Install & configure Xfce4 power-manager'
+  ansible.builtin.include_tasks: 'power-manager/main.yaml'

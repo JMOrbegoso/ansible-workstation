@@ -1,0 +1,6 @@
+---
+- name: 'Install Xfce4-power-manager'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Configure Xfce4-power-manager'
+  ansible.builtin.include_tasks: 'configuration.yaml'
