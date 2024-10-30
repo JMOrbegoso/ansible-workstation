@@ -25,6 +25,8 @@ kubectl_role_user_name: '{{ users.admin.name }}'
 
 shell_role_user_name: '{{ users.admin.name }}'
 
+ssh_role_user_name: '{{ users.admin.name }}'
+
 tmux_role_user_name: '{{ users.admin.name }}'
 
 vim_role_user_name: '{{ users.admin.name }}'

@@ -1,8 +1,0 @@
----
-- name: 'Disable dynamic Message Of The Day'
-  community.general.pamd:
-    name: sshd
-    type: session
-    control: optional
-    module_path: pam_motd.so
-    state: absent

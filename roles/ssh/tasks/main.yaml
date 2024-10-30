@@ -1,0 +1,24 @@
+---
+- name: 'Get user info for SSH role'
+  register: 'ssh_role_user'
+  ansible.builtin.user:
+    name: '{{ ssh_role_user_name }}'
+
+- name: 'Create SSH role work directory'
+  ansible.builtin.file:
+    path: '{{ ssh_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Disable dynamic Message Of The Day'
+  community.general.pamd:
+    name: sshd
+    type: session
+    control: optional
+    module_path: pam_motd.so
+    state: absent
+
+- name: 'Copy SSH private key files'
+  ansible.builtin.include_tasks: 'ssh-private-key.yaml'

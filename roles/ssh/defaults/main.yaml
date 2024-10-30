@@ -1,0 +1,12 @@
+# This variable is sensitive, so it must be declared in an ansible-vault
+# Example:
+#
+# ssh_private_keys:
+#   id_ed25519: |
+#     -----BEGIN OPENSSH PRIVATE KEY-----
+#     .
+#     .
+#     .
+#     -----END OPENSSH PRIVATE KEY-----
+
+ssh_private_keys: {}

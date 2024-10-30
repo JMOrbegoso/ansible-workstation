@@ -15,6 +15,3 @@
 
 - name: 'Configure locale values'
   ansible.builtin.include_tasks: 'locale.yaml'
-
-- name: 'Configure ssh'
-  ansible.builtin.include_tasks: 'ssh.yaml'
