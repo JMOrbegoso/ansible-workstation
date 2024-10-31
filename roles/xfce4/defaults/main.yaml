@@ -817,6 +817,14 @@ xfce4_panel_0_plugins_settings:
     value_type: 'string'
     value: '{{ timezone }}'
 
+xfce4_panel_0_keyboard_shortcuts:
+  - property: '<Alt>Pause'
+    value_type: 'string'
+    value: 'xfce4-popup-whiskermenu'
+  - property: '<Primary>Escape'
+    value_type: 'string'
+    value: 'xfce4-popup-whiskermenu'
+
 xfce4_panel_1_settings:
   - property: 'autohide-behavior'
     value_type: 'int'

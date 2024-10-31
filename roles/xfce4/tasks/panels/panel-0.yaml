@@ -31,3 +31,28 @@
   environment:
     DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
   loop: '{{ xfce4_panel_0_plugins_settings }}'
+
+- name: 'Configure Xfce4 panel 0 keyboard shortcuts'
+  become_user: '{{ xfce4_role_user.name }}'
+  community.general.xfconf:
+    channel: 'xfce4-keyboard-shortcuts'
+    property: '/commands/custom/{{ item.property }}'
+    value_type: '{{ item.value_type }}'
+    value: '{{ item.value }}'
+  environment:
+    DBUS_SESSION_BUS_ADDRESS: 'unix:path=/run/user/{{ xfce4_role_user.uid }}/bus'
+  loop: '{{ xfce4_panel_0_keyboard_shortcuts }}'
+
+- name: 'Bind super key on user login'
+  ansible.builtin.copy:
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Bind Super Key
+      Exec=xcape -e 'Super_L=Alt_L|Pause'
+      OnlyShowIn=XFCE;
+    dest: '/etc/xdg/autostart/xcape-super-binding.desktop'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
