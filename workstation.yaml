@@ -12,6 +12,7 @@
     - role: 'firewall'
     - role: 'flatpak'
     - role: 'git'
+    - role: 'gpg'
     - role: 'grub'
     - role: 'hack-nerd-font'
     - role: 'system-fonts'

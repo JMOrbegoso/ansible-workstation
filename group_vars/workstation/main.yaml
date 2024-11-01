@@ -23,6 +23,8 @@ git_role_user_name: '{{ users.admin.name }}'
 
 golang_packages_role_user_name: '{{ users.admin.name }}'
 
+gpg_role_user_name: '{{ users.admin.name }}'
+
 kubectl_role_user_name: '{{ users.admin.name }}'
 
 shell_role_user_name: '{{ users.admin.name }}'

@@ -1,0 +1,35 @@
+---
+- name: 'Get user for GPG role'
+  register: 'gpg_role_user'
+  ansible.builtin.user:
+    name: '{{ gpg_role_user_name }}'
+
+- name: 'Create GPG role work directory'
+  ansible.builtin.file:
+    path: '{{ gpg_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Install GPG'
+  ansible.builtin.apt:
+    name: '{{ gpg_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Copy keys'
+  ansible.builtin.copy:
+    content: '{{ item.value }}'
+    dest: '{{ gpg_ansible_work_path }}/{{ item.key }}'
+    owner: '{{ gpg_role_user.name }}'
+    group: '{{ gpg_role_user.name }}'
+    mode: '0600'
+  loop: '{{ gpg_keys | dict2items }}'
+  no_log: true
+
+- name: 'Import keys into the keyring'
+  become_user: '{{ gpg_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: 'gpg --batch --import {{ gpg_ansible_work_path }}/{{ item.key }}'
+  loop: '{{ gpg_keys | dict2items }}'

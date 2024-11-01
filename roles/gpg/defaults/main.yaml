@@ -1,0 +1,15 @@
+gpg_packages:
+  - 'gpg'
+
+# This variable is sensitive, so it must be declared in an ansible-vault
+# Example:
+#
+# gpg_keys:
+#   private_key: |
+#     -----BEGIN PGP PRIVATE KEY BLOCK-----
+#     .
+#     .
+#     .
+#     -----END PGP PRIVATE KEY BLOCK-----
+#
+gpg_keys: {}
