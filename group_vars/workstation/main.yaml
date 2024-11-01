@@ -19,6 +19,8 @@ dotnet_tools_role_user_name: '{{ users.admin.name }}'
 
 fastfetch_role_user_name: '{{ users.admin.name }}'
 
+git_role_user_name: '{{ users.admin.name }}'
+
 golang_packages_role_user_name: '{{ users.admin.name }}'
 
 kubectl_role_user_name: '{{ users.admin.name }}'

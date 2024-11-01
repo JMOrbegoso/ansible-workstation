@@ -1,0 +1,2 @@
+git_shared_files_path: '{{ playbook_dir }}/shared_files/git'
+git_role_templates_path: '{{ role_path }}/templates'

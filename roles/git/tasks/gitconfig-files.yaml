@@ -1,0 +1,25 @@
+---
+- name: 'Template and copy main gitconfig file'
+  ansible.builtin.template:
+    src: '{{ git_role_templates_path }}/main.gitconfig.j2'
+    dest: '{{ git_role_user.home }}/.gitconfig'
+    owner: '{{ git_role_user.name }}'
+    group: '{{ git_role_user.name }}'
+    mode: '0660'
+
+- name: 'Create directory for additional gitconfig files'
+  ansible.builtin.file:
+    path: '{{ git_role_user.home }}/.config/gitconfigs'
+    state: directory
+    owner: '{{ git_role_user.name }}'
+    group: '{{ git_role_user.name }}'
+    mode: '0770'
+
+- name: 'Copy additional gitconfig files'
+  ansible.builtin.copy:
+    src: '{{ git_shared_files_path }}/{{ item }}'
+    dest: '{{ git_role_user.home }}/.config/gitconfigs/{{ item }}'
+    owner: '{{ git_role_user.name }}'
+    group: '{{ git_role_user.name }}'
+    mode: '0660'
+  loop: '{{ git_additional_gitconfig_files | map(attribute="gitconfig_filename") }}'

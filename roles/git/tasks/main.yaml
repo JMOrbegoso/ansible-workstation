@@ -1,16 +1,17 @@
 ---
-- name: 'Install git'
+- name: 'Get user for Git role'
+  register: 'git_role_user'
+  ansible.builtin.user:
+    name: '{{ git_role_user_name }}'
+
+- name: 'Install Git'
   ansible.builtin.apt:
     name: '{{ git_packages }}'
     state: present
     install_recommends: false
 
-- name: 'Install required packages for libsecret build'
-  ansible.builtin.apt:
-    name: '{{ git_libsecret_build_packages }}'
-    state: present
-    install_recommends: false
+- name: 'Install libsecret'
+  ansible.builtin.include_tasks: 'libsecret.yaml'
 
-- name: 'Build libsecret'
-  community.general.make:
-    chdir: '/usr/share/doc/git/contrib/credential/libsecret'
+- name: 'Set gitconfig files'
+  ansible.builtin.include_tasks: 'gitconfig-files.yaml'

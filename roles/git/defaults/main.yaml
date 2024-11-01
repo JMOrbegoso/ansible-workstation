@@ -3,3 +3,21 @@ git_packages:
 
 git_libsecret_build_packages:
   - 'libsecret-1-dev'
+
+git_main_gitconfig_content: |
+  [init]
+    defaultBranch = master
+  [user]
+    name = tux
+    email = tux@git
+  [commit]
+    gpgsign = false
+  [tag]
+    gpgsign = false
+
+# Example:
+#
+# git_additional_gitconfig_files:
+#   - git_directory: ~/workspace/github/
+#     gitconfig_filename: github.gitconfig
+git_additional_gitconfig_files: []

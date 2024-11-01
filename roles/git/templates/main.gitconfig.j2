@@ -1,0 +1,6 @@
+{{ git_main_gitconfig_content }}
+
+{% for item in git_additional_gitconfig_files %}
+[includeIf "gitdir/i:{{ item.git_directory }}"]
+  path = ~/.config/gitconfigs/{{ item.gitconfig_filename }}
+{% endfor %}
