@@ -77,47 +77,47 @@
 
 1. Clone this repo or [download it](https://github.com/JMOrbegoso/ansible-homeserver/archive/refs/heads/main.zip) in your Ansible Control node:
 
-    ```BASH
-    git clone https://github.com/JMOrbegoso/ansible-workstation.git
-    cd ansible-workstation
-    ```
+   ```BASH
+   git clone https://github.com/JMOrbegoso/ansible-workstation.git
+   cd ansible-workstation
+   ```
 
 2. ✏️ Edit the inventory/hosts.yaml file:
 
-    ```BASH
-    vim ./inventory/hosts.yaml
-    ```
+   ```BASH
+   vim ./inventory/hosts.yaml
+   ```
 
 3. ✏️ Edit the playbook file according to your needs (Removing unwanted roles, setting some variables, etc):
 
-    ```BASH
-    vim ./workstation.yaml
-    ```
+   ```BASH
+   vim ./workstation.yaml
+   ```
 
 4. ✏️ Edit the variable files:
 
-    ```BASH
-    vim ./group_vars/all/main.yaml
-    vim ./group_vars/workstation/main.yaml
-    ```
+   ```BASH
+   vim ./group_vars/all/main.yaml
+   vim ./group_vars/workstation/main.yaml
+   ```
 
 5. 🔒 Create your ansible vault:
 
-    ```BASH
-    ansible-vault create ./group_vars/workstation/secrets.yaml
-    ```
+   ```BASH
+   ansible-vault create ./group_vars/workstation/secrets.yaml
+   ```
 
 6. 🛜 Check connectivity with your managed nodes:
 
-    ```BASH
-    ansible workstation -m ping --ask-vault-pass --ask-pass
-    ```
+   ```BASH
+   ansible workstation -m ping --ask-vault-pass --ask-pass
+   ```
 
 7. 🚀 Run the playbook:
 
-    ```BASH
-    ansible-playbook workstation.yaml --ask-become-pass --ask-vault-pass --ask-pass
-    ```
+   ```BASH
+   ansible-playbook workstation.yaml --ask-become-pass --ask-vault-pass --ask-pass
+   ```
 
 ## ❓ FAQ
 
@@ -145,7 +145,7 @@ For example: `shared_files/alacritty/alacritty.yaml`.
 
 To execute a role multiple times with different variable values just declare the value of the variables in the playbook instead of the `group_vars/workstation/main.yaml`:
 
-``` YAML
+```YAML
 - role: 'fastfetch'
   vars:
     fastfetch_role_user_name: 'tux'
@@ -167,8 +167,8 @@ This script has been tested on Debian 12 based desktops and laptops without a de
 
 **JMOrbegoso**
 
-- Website: [jmorbegoso.com](https://www.jmorbegoso.com)
-- Blog: [blog.jmorbegoso.com](https://blog.jmorbegoso.com)
+- Website: [www.jmorbegoso.dev](https://www.jmorbegoso.dev)
+- Blog: [blog.jmorbegoso.dev](https://blog.jmorbegoso.dev)
 - Github: [@JMOrbegoso](https://github.com/JMOrbegoso/)
 - LinkedIn: [@jmorbegosodev](https://www.linkedin.com/in/jmorbegosodev/)
 
