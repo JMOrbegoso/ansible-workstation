@@ -1,2 +1,4 @@
 firewall_allow_incoming:
-  - '192.168.1.0/24'
+  # allow incoming ssh connections from 192.168.0.0/16
+  - from_ip: '192.168.0.0/16'
+    to_port: 'ssh'

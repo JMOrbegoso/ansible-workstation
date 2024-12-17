@@ -14,19 +14,19 @@
     direction: out
     rule: allow
 
-- name: 'Configure UFW to allow incoming traffic from allowed ips & subnets'
+- name: 'Configure UFW to allow incoming traffic from allowed ips'
   community.general.ufw:
     direction: in
     rule: allow
-    from: '{{ allowed }}'
+    from_ip: '{{ item.from_ip }}'
+    to_port: '{{ item.to_port }}'
   loop: '{{ firewall_allow_incoming }}'
-  loop_control:
-    loop_var: 'allowed'
 
 - name: 'Configure UFW to reject incoming traffic'
   community.general.ufw:
     direction: in
     rule: reject
+    log: true
 
 - name: 'Enable UFW logging'
   community.general.ufw:
