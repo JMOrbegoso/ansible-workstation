@@ -41,7 +41,7 @@
     # sound
     - role: 'sound-manager'
     # display
-    - role: 'display-manager'
+    - role: 'xorg-display-server'
     - role: 'lightdm'
     # desktop environment
     - role: 'xfce4'
