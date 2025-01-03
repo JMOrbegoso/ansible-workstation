@@ -1,0 +1,6 @@
+---
+- name: 'Install lightDM'
+  ansible.builtin.apt:
+    name: '{{ lightdm_packages }}'
+    state: present
+    install_recommends: false

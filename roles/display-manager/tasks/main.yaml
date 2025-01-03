@@ -8,18 +8,6 @@
     - 'xorg'
     - 'xinit'
 
-- name: 'Install LightDM'
-  ansible.builtin.apt:
-    name: 'lightdm'
-    state: present
-    install_recommends: false
-
-- name: 'Install light-locker'
-  ansible.builtin.apt:
-    name: 'light-locker'
-    state: present
-    install_recommends: false
-
 - name: 'Install desktop-base'
   ansible.builtin.apt:
     name: 'desktop-base'

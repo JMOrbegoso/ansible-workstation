@@ -1,0 +1,3 @@
+lightdm_packages:
+  - 'lightdm'
+  - 'light-locker'
