@@ -4,6 +4,12 @@
   ansible.builtin.user:
     name: '{{ xfce4_role_user_name }}'
 
+- name: 'Install desktop-base'
+  ansible.builtin.apt:
+    name: 'desktop-base'
+    state: present
+    install_recommends: false
+
 - name: 'Install & configure Xfce4'
   ansible.builtin.include_tasks: 'xfce4/main.yaml'
 

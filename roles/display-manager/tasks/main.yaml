@@ -7,9 +7,3 @@
   loop:
     - 'xorg'
     - 'xinit'
-
-- name: 'Install desktop-base'
-  ansible.builtin.apt:
-    name: 'desktop-base'
-    state: present
-    install_recommends: false
