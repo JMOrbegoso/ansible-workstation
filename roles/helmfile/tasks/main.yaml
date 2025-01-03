@@ -1,0 +1,37 @@
+---
+- name: 'Create Helmfile role work directory'
+  ansible.builtin.file:
+    path: '{{ helmfile_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get Helmfile latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ helmfile_github_repository }}/releases/latest'
+    return_content: true
+  register: 'helmfile_version'
+
+- name: 'Download Helmfile latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ helmfile_github_repository }}/releases/download/{{ helmfile_version.json.tag_name }}/helmfile_{{ helmfile_version.json.tag_name | replace("v", "") }}_linux_amd64.tar.gz'
+    dest: '{{ helmfile_ansible_work_path }}/helmfile_amd64.tar.gz'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Extract Helmfile release tarball'
+  ansible.builtin.unarchive:
+    src: '{{ helmfile_ansible_work_path }}/helmfile_amd64.tar.gz'
+    dest: '{{ helmfile_ansible_work_path }}'
+    remote_src: true
+
+- name: 'Move Helmfile binary'
+  ansible.builtin.copy:
+    src: '{{ helmfile_ansible_work_path }}/helmfile'
+    dest: '/usr/local/bin/helmfile'
+    mode: '0715'
+    force: true
+    remote_src: true

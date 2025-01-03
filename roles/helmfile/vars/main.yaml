@@ -1,0 +1,3 @@
+helmfile_ansible_work_path: '{{ ansible_work_path }}/helmfile'
+
+helmfile_github_repository: 'helmfile/helmfile'

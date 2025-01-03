@@ -27,6 +27,7 @@
     - role: 'golang'
     - role: 'golang-packages'
     - role: 'helm'
+    - role: 'helmfile'
     - role: 'hugo'
     - role: 'kubectl'
     - role: 'minikube'
