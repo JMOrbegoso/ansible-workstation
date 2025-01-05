@@ -30,6 +30,7 @@
     - role: 'helmfile'
     - role: 'hugo'
     - role: 'kubectl'
+    - role: 'kubebuilder'
     - role: 'minikube'
     - role: 'shell'
     - role: 'ssh'

@@ -1,0 +1,31 @@
+---
+- name: 'Create Kubebuilder role work directory'
+  ansible.builtin.file:
+    path: '{{ kubebuilder_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get Kubebuilder latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ kubebuilder_github_repository }}/releases/latest'
+    return_content: true
+  register: 'kubebuilder_version'
+
+- name: 'Download Kubebuilder latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ kubebuilder_github_repository }}/releases/download/{{ kubebuilder_version.json.tag_name }}/kubebuilder_linux_amd64'
+    dest: '{{ kubebuilder_ansible_work_path }}/kubebuilder_linux_amd64'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Move Kubebuilder binary'
+  ansible.builtin.copy:
+    src: '{{ kubebuilder_ansible_work_path }}/kubebuilder_linux_amd64'
+    dest: '/usr/local/bin/kubebuilder'
+    mode: '0715'
+    force: true
+    remote_src: true

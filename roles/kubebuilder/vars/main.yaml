@@ -1,0 +1,3 @@
+kubebuilder_ansible_work_path: '{{ ansible_work_path }}/kubebuilder'
+
+kubebuilder_github_repository: 'kubernetes-sigs/kubebuilder'
