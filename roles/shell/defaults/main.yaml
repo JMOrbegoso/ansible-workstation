@@ -22,6 +22,10 @@ shell_zshrc_aliases: |
 shell_zshrc_exports:
   - name: 'ANSIBLE_WORKDIR'
     path: '{{ ansible_work_path }}'
+  - name: 'CARGO_HOME'
+    path: '$HOME/.cargo'
+  - name: 'RUSTUP_HOME'
+    path: '$HOME/.rustup'
 
 shell_zshrc_paths:
   - '/sbin'

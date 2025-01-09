@@ -1,0 +1,1 @@
+rust_lang_ansible_work_path: '{{ ansible_work_path }}/rust-lang'

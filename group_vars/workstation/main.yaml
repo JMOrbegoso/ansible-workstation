@@ -27,6 +27,8 @@ gpg_role_user_name: '{{ users.admin.name }}'
 
 kubectl_role_user_name: '{{ users.admin.name }}'
 
+rust_lang_role_user_name: '{{ users.admin.name }}'
+
 shell_role_user_name: '{{ users.admin.name }}'
 
 ssh_role_user_name: '{{ users.admin.name }}'

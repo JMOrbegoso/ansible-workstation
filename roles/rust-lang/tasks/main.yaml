@@ -1,0 +1,29 @@
+---
+- name: 'Get user info for Rust lang packages role'
+  register: 'rust_lang_role_user'
+  ansible.builtin.user:
+    name: '{{ rust_lang_role_user_name }}'
+
+- name: 'Create Rustup role work directory'
+  ansible.builtin.file:
+    path: '{{ rust_lang_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Download the latest rustup-init binary'
+  ansible.builtin.get_url:
+    url: '{{ rust_lang_rustup_download_path }}'
+    dest: '{{ rust_lang_ansible_work_path }}/rustup-init'
+    owner: 'root'
+    group: 'root'
+    mode: '0715'
+    force: true
+
+- name: 'Install Rust'
+  become_user: '{{ rust_lang_role_user.name }}'
+  ansible.builtin.shell: '{{ rust_lang_ansible_work_path }}/rustup-init -y'
+  environment:
+    CARGO_HOME: '{{ rust_lang_role_user.home }}/.cargo'
+    RUSTUP_HOME: '{{ rust_lang_role_user.home }}/.rustup'

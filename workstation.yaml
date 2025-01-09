@@ -32,6 +32,7 @@
     - role: 'kubectl'
     - role: 'kubebuilder'
     - role: 'minikube'
+    - role: 'rust-lang'
     - role: 'shell'
     - role: 'ssh'
     - role: 'terraform'
