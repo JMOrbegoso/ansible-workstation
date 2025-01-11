@@ -1,0 +1,6 @@
+---
+- name: 'Install SDDM display manager'
+  ansible.builtin.apt:
+    name: '{{ sddm_packages }}'
+    state: present
+    install_recommends: false
