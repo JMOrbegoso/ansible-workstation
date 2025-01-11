@@ -12,11 +12,57 @@
     group: 'root'
     mode: '0775'
 
-- name: 'Install Alacritty'
+- name: 'Install Alacritty build dependencies'
   ansible.builtin.apt:
-    name: 'alacritty'
+    name: '{{ alacritty_build_dependencies }}'
     state: present
     install_recommends: false
+
+- name: 'Build Alacritty using cargo'
+  community.general.cargo:
+    name: 'alacritty'
+    path: '{{ alacritty_ansible_work_path }}'
+    state: 'present'
+  environment:
+    PATH: '/usr/local/cargo/bin:/usr/local/bin:/usr/bin:$PATH'
+    RUSTUP_HOME: '/usr/local/rustup'
+    CARGO_HOME: '{{ alacritty_ansible_work_path }}'
+
+- name: 'Copy Alacritty binary'
+  ansible.builtin.copy:
+    src: '{{ alacritty_ansible_work_path }}/bin/alacritty'
+    dest: '/usr/bin/alacritty'
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+    force: true
+    remote_src: true
+
+- name: 'Copy Alacritty icon'
+  ansible.builtin.copy:
+    src: '{{ alacritty_role_files_path }}/alacritty.svg'
+    dest: '/usr/share/pixmaps/Alacritty.svg'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Copy Alacritty desktop-file'
+  ansible.builtin.copy:
+    src: '{{ alacritty_role_files_path }}/alacritty.desktop'
+    dest: '{{ alacritty_ansible_work_path }}/alacritty.desktop'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Install Alacritty desktop-file'
+  ansible.builtin.shell:
+    cmd: 'desktop-file-install {{ alacritty_ansible_work_path }}/alacritty.desktop'
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'
 
 - name: 'Create Alacritty config directory'
   ansible.builtin.file:
@@ -24,30 +70,20 @@
     state: directory
     owner: '{{ alacritty_role_user.name }}'
     group: '{{ alacritty_role_user.name }}'
-    mode: '0770'
+    mode: '0700'
 
-- name: 'Create Alacritty themes directory'
-  ansible.builtin.file:
-    path: '{{ alacritty_role_user.home }}/.config/alacritty/themes'
-    state: directory
-    owner: '{{ alacritty_role_user.name }}'
-    group: '{{ alacritty_role_user.name }}'
-    mode: '0770'
-- name: 'Copy Alacritty themes'
-  ansible.builtin.copy:
-    src: '{{ alacritty_role_files_path }}/{{ item }}'
-    dest: '{{ alacritty_role_user.home }}/.config/alacritty/themes/{{ item }}'
-    owner: '{{ alacritty_role_user.name }}'
-    group: '{{ alacritty_role_user.name }}'
-    mode: '0660'
-  loop:
-    - 'github_dark.yml'
-    - 'github_light.yml'
+- name: 'Clone alacritty-theme repository'
+  become_user: '{{ alacritty_role_user.name }}'
+  ansible.builtin.git:
+    repo: '{{ alacritty_themes_repository }}'
+    dest: '{{ alacritty_role_user.home }}/.config/alacritty/themes'
+    version: 'master'
+    force: true
 
-- name: 'Copy Alacritty config file'
-  ansible.builtin.copy:
-    src: '{{ alacritty_shared_files_path }}/alacritty.yaml'
-    dest: '{{ alacritty_role_user.home }}/.config/alacritty/alacritty.yml'
+- name: 'Template and copy Alacritty config file'
+  ansible.builtin.template:
+    src: '{{ alacritty_role_templates_path }}/alacritty.toml.j2'
+    dest: '{{ alacritty_role_user.home }}/.config/alacritty/alacritty.toml'
     owner: '{{ alacritty_role_user.name }}'
     group: '{{ alacritty_role_user.name }}'
     mode: '0660'

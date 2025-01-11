@@ -1,5 +1,8 @@
+alacritty_role_files_path: '{{ role_path }}/files'
+alacritty_role_templates_path: '{{ role_path }}/templates'
+
 alacritty_shared_files_path: '{{ playbook_dir }}/shared_files/alacritty'
 
-alacritty_role_files_path: '{{ role_path }}/files'
-
 alacritty_ansible_work_path: '{{ ansible_work_path }}/alacritty'
+
+alacritty_themes_repository: 'https://github.com/alacritty/alacritty-theme.git'
