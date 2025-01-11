@@ -1,9 +1,4 @@
 ---
-- name: 'Get user info for Rust lang packages role'
-  register: 'rust_lang_role_user'
-  ansible.builtin.user:
-    name: '{{ rust_lang_role_user_name }}'
-
 - name: 'Create Rustup role work directory'
   ansible.builtin.file:
     path: '{{ rust_lang_ansible_work_path }}'
@@ -22,8 +17,7 @@
     force: true
 
 - name: 'Install Rust'
-  become_user: '{{ rust_lang_role_user.name }}'
-  ansible.builtin.shell: '{{ rust_lang_ansible_work_path }}/rustup-init -y'
+  ansible.builtin.shell: '{{ rust_lang_ansible_work_path }}/rustup-init --default-toolchain stable --profile default --no-modify-path -y'
   environment:
-    CARGO_HOME: '{{ rust_lang_role_user.home }}/.cargo'
-    RUSTUP_HOME: '{{ rust_lang_role_user.home }}/.rustup'
+    RUSTUP_HOME: '/usr/local/rustup'
+    CARGO_HOME: '/usr/local/cargo'
