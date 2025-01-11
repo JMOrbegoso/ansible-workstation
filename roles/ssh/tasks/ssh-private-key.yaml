@@ -5,7 +5,7 @@
       {% for item in ssh_private_keys %}
       IdentityFile '{{ ssh_role_user.home }}/.ssh/{{ item }}'
       {% endfor %}
-    dest: '{{ ssh_ansible_work_path }}/config.j2'
+    dest: '{{ ssh_ansible_work_path }}/config'
     owner: '{{ ssh_role_user.name }}'
     group: '{{ ssh_role_user.name }}'
     mode: '0660'
@@ -18,13 +18,15 @@
     group: '{{ ssh_role_user.name }}'
     mode: '0770'
 
-- name: 'Create ~/.ssh/config file'
+- name: 'Copy ~/.ssh/config file'
   ansible.builtin.copy:
-    src: '{{ ssh_ansible_work_path }}/config.j2'
+    src: '{{ ssh_ansible_work_path }}/config'
     dest: '{{ ssh_role_user.home }}/.ssh/config'
     owner: '{{ ssh_role_user.name }}'
     group: '{{ ssh_role_user.name }}'
     mode: '0600'
+    force: true
+    remote_src: true
 
 - name: 'Copy SSH private keys'
   ansible.builtin.copy:
