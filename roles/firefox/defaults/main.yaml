@@ -1,0 +1,6 @@
+firefox_apt_repository_signing_key: 'https://packages.mozilla.org/apt/repo-signing-key.gpg'
+firefox_apt_repository_url: 'https://packages.mozilla.org/apt'
+firefox_apt_repository_options: 'mozilla main'
+
+firefox_packages:
+  - 'firefox'

@@ -1,0 +1,24 @@
+---
+- name: 'Add Mozilla Firefox repository signing key'
+  ansible.builtin.get_url:
+    url: '{{ firefox_apt_repository_signing_key }}'
+    dest: '/usr/share/keyrings/firefox-browser-archive-keyring.asc'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+    force: true
+
+- name: 'Add Mozilla Firefox repository to apt'
+  ansible.builtin.apt_repository:
+    repo: 'deb [signed-by=/usr/share/keyrings/firefox-browser-archive-keyring.asc] {{ firefox_apt_repository_url }} {{ firefox_apt_repository_options }}'
+    state: present
+
+- name: 'Update APT repository cache'
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: 'Install Mozilla Firefox'
+  ansible.builtin.apt:
+    name: '{{ firefox_packages }}'
+    state: present
+    install_recommends: false
