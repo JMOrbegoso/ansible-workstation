@@ -10,7 +10,7 @@ albert_hotkey: 'Meta+Space'
 albert_chromium_plugin_enabled: true
 albert_chromium_plugin_bookmarks:
   - name: 'DuckDuckGo AI Chat'
-    url: 'https://duckduckgo.com/?q=DuckDuckGo&ia=chat'
+    url: 'https://duck.ai'
   - name: 'Ansible Workstation repository'
     url: 'https://github.com/JMOrbegoso/ansible-workstation'
 
