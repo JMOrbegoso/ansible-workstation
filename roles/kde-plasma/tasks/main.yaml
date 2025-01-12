@@ -27,3 +27,6 @@
 
 - name: 'Install & configure Dolphin'
   ansible.builtin.include_tasks: 'dolphin/main.yaml'
+
+- name: 'Install & configure KWrite'
+  ansible.builtin.include_tasks: 'kwrite/main.yaml'

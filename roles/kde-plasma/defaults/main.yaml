@@ -33,3 +33,16 @@ kde_plasma_kwallet_pam_packages:
 kde_plasma_dolphin_packages:
   - 'dolphin'
   - 'dolphin-plugins'
+
+##################################################
+##################### KWrite #####################
+##################################################
+
+kde_plasma_kwrite_packages:
+  - 'kwrite'
+
+kde_plasma_kwrite_spellcheck_support_packages:
+  - 'sonnet-plugins'
+
+kde_plasma_kwrite_spellcheck_dictionaries:
+  - 'hunspell-en-us'
