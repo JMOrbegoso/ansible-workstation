@@ -1,0 +1,6 @@
+---
+- name: 'Install KDE Plasma Dolphin packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_dolphin_packages }}'
+    state: present
+    install_recommends: false

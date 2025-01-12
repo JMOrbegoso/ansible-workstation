@@ -25,3 +25,11 @@ kde_plasma_kwallet_pam_enabled: true
 
 kde_plasma_kwallet_pam_packages:
   - 'libpam-kwallet5'
+
+##################################################
+##################### Dolphin ####################
+##################################################
+
+kde_plasma_dolphin_packages:
+  - 'dolphin'
+  - 'dolphin-plugins'

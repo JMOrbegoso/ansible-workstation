@@ -24,3 +24,6 @@
 
 - name: 'Install & configure KWallet'
   ansible.builtin.include_tasks: 'kwallet/main.yaml'
+
+- name: 'Install & configure Dolphin'
+  ansible.builtin.include_tasks: 'dolphin/main.yaml'
