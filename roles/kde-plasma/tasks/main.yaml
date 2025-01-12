@@ -1,0 +1,17 @@
+---
+- name: 'Get user info for KDE Plasma role'
+  register: 'kde_plasma_role_user'
+  ansible.builtin.user:
+    name: '{{ kde_plasma_role_user_name }}'
+
+- name: 'Install desktop-base'
+  ansible.builtin.apt:
+    name: 'desktop-base'
+    state: present
+    install_recommends: false
+
+- name: 'Install KDE Plasma base packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_base_packages }}'
+    state: present
+    install_recommends: false
