@@ -16,5 +16,11 @@
     state: present
     install_recommends: false
 
+- name: 'Install KDE Plasma setting packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_setting_packages }}'
+    state: present
+    install_recommends: false
+
 - name: 'Install & configure KWallet'
   ansible.builtin.include_tasks: 'kwallet/main.yaml'

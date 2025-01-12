@@ -6,6 +6,14 @@ kde_plasma_base_packages:
   - 'plasma-desktop'
   - 'plasma-workspace-wayland'
 
+kde_plasma_setting_packages:
+  - 'bluedevil'
+  - 'kde-config-screenlocker'
+  - 'kscreen'
+  - 'plasma-nm'
+  - 'powerdevil'
+  - 'systemsettings'
+
 ##################################################
 ##################### KWallet ####################
 ##################################################
