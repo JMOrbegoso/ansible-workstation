@@ -30,3 +30,6 @@
 
 - name: 'Install & configure KWrite'
   ansible.builtin.include_tasks: 'kwrite/main.yaml'
+
+- name: 'Install & configure Elisa'
+  ansible.builtin.include_tasks: 'elisa/main.yaml'

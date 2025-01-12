@@ -1,0 +1,6 @@
+---
+- name: 'Install KDE Plasma Elisa packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_elisa_packages }}'
+    state: present
+    install_recommends: false
