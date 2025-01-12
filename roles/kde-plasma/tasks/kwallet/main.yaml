@@ -1,0 +1,30 @@
+---
+- name: 'Install KDE Plasma KWallet packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_kwallet_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Install KDE Plasma KWallet PAM packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_kwallet_pam_packages }}'
+    state: present
+    install_recommends: false
+  when: 'kde_plasma_kwallet_pam_enabled'
+
+- name: "Update pamd auth rule's for SDDM"
+  community.general.pamd:
+    name: 'sddm'
+    type: 'auth'
+    control: 'optional'
+    module_path: 'pam_kwallet5.so'
+  when: 'kde_plasma_kwallet_pam_enabled'
+
+- name: "Update pamd session rule's for SDDM"
+  community.general.pamd:
+    name: 'sddm'
+    type: 'session'
+    control: 'optional'
+    module_path: 'pam_kwallet5.so'
+    module_arguments: 'auto_start'
+  when: 'kde_plasma_kwallet_pam_enabled'

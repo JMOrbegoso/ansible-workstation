@@ -15,3 +15,6 @@
     name: '{{ kde_plasma_base_packages }}'
     state: present
     install_recommends: false
+
+- name: 'Install & configure KWallet'
+  ansible.builtin.include_tasks: 'kwallet/main.yaml'
