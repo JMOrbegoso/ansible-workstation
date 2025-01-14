@@ -53,3 +53,10 @@ kde_plasma_kwrite_spellcheck_dictionaries:
 
 kde_plasma_elisa_packages:
   - 'elisa'
+
+##################################################
+############ KDE Plasma Screenshooter ############
+##################################################
+
+kde_plasma_screenshooter_packages:
+  - 'kde-spectacle'

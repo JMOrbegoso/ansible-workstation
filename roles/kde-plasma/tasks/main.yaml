@@ -33,3 +33,6 @@
 
 - name: 'Install & configure Elisa'
   ansible.builtin.include_tasks: 'elisa/main.yaml'
+
+- name: 'Install & configure the screenshooter'
+  ansible.builtin.include_tasks: 'screenshooter/main.yaml'

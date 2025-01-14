@@ -1,0 +1,22 @@
+---
+- name: 'Install KDE Plasma screenshooter packages'
+  ansible.builtin.apt:
+    name: '{{ kde_plasma_screenshooter_packages }}'
+    state: present
+    install_recommends: false
+
+- name: 'Create screenshoots directory'
+  ansible.builtin.file:
+    path: '{{ kde_plasma_role_user.home }}/Pictures/Screenshots'
+    state: directory
+    owner: '{{ kde_plasma_role_user.name }}'
+    group: '{{ kde_plasma_role_user.name }}'
+    mode: '0755'
+
+- name: 'Template and copy KDE Plasma screenshooter configuration file'
+  ansible.builtin.template:
+    src: '{{ kde_plasma_role_templates_path }}/spectaclerc.j2'
+    dest: '{{ kde_plasma_role_user.home }}/.config/spectaclerc'
+    owner: '{{ kde_plasma_role_user.uid }}'
+    group: '{{ kde_plasma_role_user.uid }}'
+    mode: '0644'
