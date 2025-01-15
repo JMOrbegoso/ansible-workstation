@@ -16,3 +16,11 @@
     name: '{{ kde_plasma_kwrite_spellcheck_dictionaries }}'
     state: present
     install_recommends: false
+
+- name: 'Template and copy KWrite configuration file'
+  ansible.builtin.template:
+    src: '{{ kde_plasma_role_templates_path }}/kwriterc.j2'
+    dest: '{{ kde_plasma_role_user.home }}/.config/kwriterc'
+    owner: '{{ kde_plasma_role_user.uid }}'
+    group: '{{ kde_plasma_role_user.uid }}'
+    mode: '0644'
