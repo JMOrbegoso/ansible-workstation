@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Zen Private Browsing
+GenericName=Web Browser
+StartupNotify=true
+Terminal=false
+MimeType=x-scheme-handler/http;x-scheme-handler/https;
+Comment=Zen Browser Private Browsing
+Categories=Network;WebBrowser;Security;
+StartupWMClass=zen-default
+Exec=zen %u --private-window
+Icon=zen-private-browsing

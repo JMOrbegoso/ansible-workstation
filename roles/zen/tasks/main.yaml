@@ -1,0 +1,94 @@
+---
+- name: 'Create Zen Browser role work directory'
+  ansible.builtin.file:
+    path: '{{ zen_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get Zen Browser latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ zen_github_repository }}/releases/latest'
+    return_content: true
+  register: 'zen_version'
+
+- name: 'Download Zen Browser latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ zen_github_repository }}/releases/download/{{ zen_version.json.tag_name }}/zen-x86_64.AppImage'
+    dest: '{{ zen_ansible_work_path }}/Zen.AppImage'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Create Zen Browser binary directory'
+  ansible.builtin.file:
+    path: '/opt/Zen'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0755'
+
+- name: 'Move Zen Browser AppImage'
+  ansible.builtin.copy:
+    src: '{{ zen_ansible_work_path }}/Zen.AppImage'
+    dest: '/opt/Zen/Zen.AppImage'
+    owner: 'root'
+    group: 'root'
+    mode: '0715'
+    force: true
+    remote_src: true
+
+- name: 'Create Zen Browser symlink'
+  ansible.builtin.file:
+    src: '/opt/Zen/Zen.AppImage'
+    dest: '/usr/bin/zen'
+    state: link
+    owner: 'root'
+    group: 'root'
+    mode: '0777'
+
+- name: 'Copy Zen Browser icon'
+  ansible.builtin.copy:
+    src: '{{ zen_role_files_path }}/zen.svg'
+    dest: '/usr/share/pixmaps/Zen.svg'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+
+- name: 'Copy Zen Browser icons'
+  ansible.builtin.copy:
+    src: '{{ zen_role_files_path }}/{{ item }}'
+    dest: '/usr/share/pixmaps/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+  loop:
+    - 'zen.svg'
+    - 'zen-private-browsing.svg'
+
+- name: 'Copy Zen Browser desktop files'
+  ansible.builtin.copy:
+    src: '{{ zen_role_files_path }}/{{ item }}'
+    dest: '{{ zen_ansible_work_path }}/{{ item }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0615'
+    force: true
+  loop:
+    - 'zen.desktop'
+    - 'zen-private-browsing.desktop'
+
+- name: 'Install Zen Browser desktop files'
+  ansible.builtin.shell:
+    cmd: 'desktop-file-install {{ zen_ansible_work_path }}/{{ item }}'
+  loop:
+    - 'zen.desktop'
+    - 'zen-private-browsing.desktop'
+
+- name: 'Update Desktop Database'
+  ansible.builtin.shell:
+    cmd: 'update-desktop-database'
