@@ -1,13 +1,11 @@
 - name: 'Copy shell scripts'
   ansible.builtin.copy:
-    dest: '{{ shell_role_user.home }}/.shell/scripts/{{ script_file.name }}'
-    content: |
-      #!/bin/bash
-
-      {{ script_file.content }}
+    src: '{{ shell_shared_files_path }}/{{ script_file }}'
+    dest: '{{ shell_role_user.home }}/.shell/scripts/{{ script_file }}'
     owner: '{{ shell_role_user.name }}'
     group: '{{ shell_role_user.name }}'
     mode: '0770'
+    force: true
   loop: '{{ shell_script_files }}'
   loop_control:
     loop_var: 'script_file'

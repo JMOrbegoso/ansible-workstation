@@ -33,10 +33,7 @@ shell_zshrc_paths:
   - '/usr/sbin'
 
 shell_script_files:
-  - name: 'command-exists.sh'
-    content: |
-      # Returns TRUE if a command exists, otherwise returns FALSE
-      command -v "${1}" >/dev/null 2>&1
+  - 'command-exists.sh'
 
 shell_ohmyzsh_external_plugins:
   - repository_url: 'https://github.com/zsh-users/zsh-autosuggestions.git'
