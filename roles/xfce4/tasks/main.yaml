@@ -25,6 +25,9 @@
 - name: 'Install & configure Xfce4 panels'
   ansible.builtin.include_tasks: 'panels/main.yaml'
 
+- name: 'Install & configure gnome-keyring'
+  ansible.builtin.include_tasks: 'gnome-keyring/main.yaml'
+
 - name: 'Install & configure Ristretto Image Viewer'
   ansible.builtin.include_tasks: 'ristretto/main.yaml'
 

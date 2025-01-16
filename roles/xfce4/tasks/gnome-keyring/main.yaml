@@ -1,0 +1,6 @@
+---
+- name: 'Install gnome-keyring'
+  ansible.builtin.include_tasks: 'install.yaml'
+
+- name: 'Configure PAM for gnome-keyring'
+  ansible.builtin.include_tasks: 'pam.yaml'

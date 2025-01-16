@@ -948,6 +948,18 @@ xfce4_panel_1_plugins_settings:
     value: '0'
 
 ##################################################
+################## gnome-keyring #################
+##################################################
+
+xfce4_gnome_keyring_packages:
+  - 'gnome-keyring'
+
+xfce4_gnome_keyring_pam_enabled: true
+
+xfce4_gnome_keyring_pam_packages:
+  - 'libpam-gnome-keyring'
+
+##################################################
 ############# Ristretto Image Viewer #############
 ##################################################
 

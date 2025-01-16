@@ -1,0 +1,6 @@
+---
+- name: 'Install gnome-keyring packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_gnome_keyring_packages }}'
+    state: present
+    install_recommends: false

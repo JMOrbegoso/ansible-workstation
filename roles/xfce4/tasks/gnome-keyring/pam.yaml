@@ -1,0 +1,24 @@
+---
+- name: 'Install gnome-keyring PAM packages'
+  ansible.builtin.apt:
+    name: '{{ xfce4_gnome_keyring_pam_packages }}'
+    state: present
+    install_recommends: false
+  when: 'xfce4_gnome_keyring_pam_enabled'
+
+- name: "Update pamd auth rule's for lightDM"
+  community.general.pamd:
+    name: 'lightdm'
+    type: 'auth'
+    control: 'optional'
+    module_path: 'pam_gnome_keyring.so'
+  when: 'xfce4_gnome_keyring_pam_enabled'
+
+- name: "Update pamd session rule's for lightDM"
+  community.general.pamd:
+    name: 'lightdm'
+    type: 'session'
+    control: 'optional'
+    module_path: 'pam_gnome_keyring.so'
+    module_arguments: 'auto_start'
+  when: 'xfce4_gnome_keyring_pam_enabled'
