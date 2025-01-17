@@ -1,0 +1,27 @@
+---
+- name: 'Get user info for Helm plugins role'
+  register: 'helm_plugins_role_user'
+  ansible.builtin.user:
+    name: '{{ helm_plugins_role_user_name }}'
+
+- name: 'Create Helm directory'
+  ansible.builtin.file:
+    path: '{{ helm_plugins_role_user.home }}/.local/share/helm'
+    state: directory
+    owner: '{{ helm_plugins_role_user.uid }}'
+    group: '{{ helm_plugins_role_user.uid }}'
+    mode: '0755'
+
+- name: 'Create Helm plugins directory'
+  ansible.builtin.file:
+    path: '{{ helm_plugins_role_user.home }}/.local/share/helm/plugins'
+    state: directory
+    owner: '{{ helm_plugins_role_user.uid }}'
+    group: '{{ helm_plugins_role_user.uid }}'
+    mode: '0755'
+
+- name: 'Install Helm plugins'
+  ansible.builtin.include_tasks: 'install-plugin.yaml'
+  loop: '{{ helm_plugins }}'
+  loop_control:
+    loop_var: 'helm_plugin'

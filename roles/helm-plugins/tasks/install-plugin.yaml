@@ -1,0 +1,6 @@
+---
+- name: 'Install {{ helm_plugin.name }}'
+  become_user: '{{ helm_plugins_role_user.name }}'
+  ansible.builtin.shell: '/usr/bin/helm plugin install {{ helm_plugin.url }}'
+  environment:
+    HELM_PLUGINS: '{{ helm_plugins_role_user.home }}/.local/share/helm/plugins'

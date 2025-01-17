@@ -26,6 +26,8 @@ shell_zshrc_exports:
     path: '$HOME/.cargo'
   - name: 'RUSTUP_HOME'
     path: '/usr/local/rustup'
+  - name: 'HELM_PLUGINS'
+    path: '$HOME/.local/share/helm/plugins'
 
 shell_zshrc_paths:
   - '/sbin'
