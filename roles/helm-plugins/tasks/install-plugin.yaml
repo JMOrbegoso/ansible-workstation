@@ -1,6 +1,19 @@
 ---
-- name: 'Install {{ helm_plugin.name }}'
+- name: 'Check if Helm {{ helm_plugin.name }} plugin is already installed'
+  become_user: '{{ helm_plugins_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '/usr/bin/helm plugin list'
+  environment:
+    HELM_PLUGINS: '{{ helm_plugins_role_user.home }}/.local/share/helm/plugins'
+  register: 'helm_plugins_list_command_output'
+
+- name: Set Helm {{ helm_plugin.name }} plugin installation status'
+  ansible.builtin.set_fact:
+    helm_plugins_install_plugin: '{{ helm_plugin.name not in helm_plugins_list_command_output.stdout }}'
+
+- name: 'Install Helm {{ helm_plugin.name }} plugin'
   become_user: '{{ helm_plugins_role_user.name }}'
   ansible.builtin.shell: '/usr/bin/helm plugin install {{ helm_plugin.url }}'
   environment:
     HELM_PLUGINS: '{{ helm_plugins_role_user.home }}/.local/share/helm/plugins'
+  when: 'helm_plugins_install_plugin'
