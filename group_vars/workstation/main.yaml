@@ -8,5 +8,5 @@ users:
     ssh_authorized_keys: []
 
 # This variable is sensitive, so it must be declared in an ansible-vault
-user_passwords:
+users_passwords:
   tux: '123456'

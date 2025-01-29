@@ -4,7 +4,7 @@
   ansible.builtin.user:
     name: '{{ user.name }}'
     uid: '{{ user.uid }}'
-    password: "{{ user_passwords[user.name] | password_hash('sha512') }}"
+    password: "{{ users_passwords[user.name] | password_hash('sha512') }}"
     update_password: on_create
     create_home: true
 
