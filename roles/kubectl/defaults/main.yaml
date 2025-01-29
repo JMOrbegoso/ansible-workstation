@@ -1,3 +1,5 @@
+kubectl_role_user_name: '{{ users.admin.name }}'
+
 kubectl_releases_list: 'https://dl.k8s.io/release/stable.txt'
 
 kubectl_apt_repository_signing_key: 'https://pkgs.k8s.io/core:/stable:/{{ kubectl_k8s_version }}/deb/Release.key'

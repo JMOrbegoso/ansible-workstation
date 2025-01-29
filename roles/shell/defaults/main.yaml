@@ -1,3 +1,5 @@
+shell_role_user_name: '{{ users.admin.name }}'
+
 shell_ohmyzsh_installation_script_download_path: 'https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh'
 
 shell_zshrc_aliases: |

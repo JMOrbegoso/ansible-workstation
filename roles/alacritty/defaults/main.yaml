@@ -1,3 +1,5 @@
+alacritty_role_user_name: '{{ users.admin.name }}'
+
 alacritty_build_dependencies:
   - 'cmake'
   - 'pkg-config'

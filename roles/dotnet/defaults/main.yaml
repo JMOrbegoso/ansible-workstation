@@ -1,3 +1,5 @@
+dotnet_tools_role_user_name: '{{ users.admin.name }}'
+
 dotnet_apt_repository_signing_key: 'https://packages.microsoft.com/keys/microsoft.asc'
 dotnet_apt_repository_url: 'https://packages.microsoft.com/debian/12/prod'
 dotnet_apt_repository_options: 'bookworm main'

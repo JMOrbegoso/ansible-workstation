@@ -1,3 +1,5 @@
+volta_role_user_name: '{{ users.admin.name }}'
+
 volta_global_packages:
   - 'node'
   - 'typescript'

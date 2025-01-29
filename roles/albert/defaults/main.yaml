@@ -1,3 +1,5 @@
+albert_role_user_name: '{{ users.admin.name }}'
+
 albert_apt_repository_signing_key: 'https://download.opensuse.org/repositories/home:manuelschneid3r/Debian_12/Release.key'
 albert_apt_repository_url: 'http://download.opensuse.org/repositories/home:/manuelschneid3r/Debian_12/'
 albert_apt_repository_options: '/'

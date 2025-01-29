@@ -1,3 +1,5 @@
+git_role_user_name: '{{ users.admin.name }}'
+
 git_packages:
   - 'git'
 

@@ -1,1 +1,3 @@
+golang_packages_role_user_name: '{{ users.admin.name }}'
+
 golang_latest_version_url: 'https://go.dev/VERSION\?m\=text'

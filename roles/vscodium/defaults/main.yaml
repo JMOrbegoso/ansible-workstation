@@ -1,3 +1,5 @@
+vscodium_role_user_name: '{{ users.admin.name }}'
+
 vscodium_apt_repository_signing_key: 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg'
 vscodium_apt_repository_url: 'https://download.vscodium.com/debs'
 vscodium_apt_repository_options: 'vscodium main'

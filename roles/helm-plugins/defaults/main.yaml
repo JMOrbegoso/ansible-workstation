@@ -1,3 +1,5 @@
+helm_plugins_role_user_name: '{{ users.admin.name }}'
+
 helm_plugins:
   - name: 'diff'
     url: 'https://github.com/databus23/helm-diff'
@@ -7,4 +9,3 @@ helm_plugins:
     url: 'https://github.com/jkroepke/helm-secrets'
   - name: 's3'
     url: 'https://github.com/hypnoglow/helm-s3'
-

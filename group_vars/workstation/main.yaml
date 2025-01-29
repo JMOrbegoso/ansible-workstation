@@ -10,37 +10,3 @@ users:
 # This variable is sensitive, so it must be declared in an ansible-vault
 user_passwords:
   tux: '123456'
-
-alacritty_role_user_name: '{{ users.admin.name }}'
-
-albert_role_user_name: '{{ users.admin.name }}'
-
-dotnet_tools_role_user_name: '{{ users.admin.name }}'
-
-fastfetch_role_user_name: '{{ users.admin.name }}'
-
-git_role_user_name: '{{ users.admin.name }}'
-
-golang_packages_role_user_name: '{{ users.admin.name }}'
-
-gpg_role_user_name: '{{ users.admin.name }}'
-
-helm_plugins_role_user_name: '{{ users.admin.name }}'
-
-kde_plasma_role_user_name: '{{ users.admin.name }}'
-
-kubectl_role_user_name: '{{ users.admin.name }}'
-
-shell_role_user_name: '{{ users.admin.name }}'
-
-ssh_role_user_name: '{{ users.admin.name }}'
-
-tmux_role_user_name: '{{ users.admin.name }}'
-
-vim_role_user_name: '{{ users.admin.name }}'
-
-volta_role_user_name: '{{ users.admin.name }}'
-
-vscodium_role_user_name: '{{ users.admin.name }}'
-
-xfce4_role_user_name: '{{ users.admin.name }}'

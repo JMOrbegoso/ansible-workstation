@@ -1,3 +1,5 @@
+gpg_role_user_name: '{{ users.admin.name }}'
+
 gpg_packages:
   - 'gpg'
 
