@@ -1,0 +1,35 @@
+---
+- name: 'Set Terragrunt release architecture'
+  ansible.builtin.set_fact:
+    terragrunt_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Create Terragrunt role work directory'
+  ansible.builtin.file:
+    path: '{{ terragrunt_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get Terragrunt latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ terragrunt_github_repository }}/releases/latest'
+    return_content: true
+  register: 'terragrunt_version'
+
+- name: 'Download Terragrunt latest release'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ terragrunt_github_repository }}/releases/download/{{ terragrunt_version.json.tag_name }}/terragrunt_linux_{{ terragrunt_release_architecture }}'
+    dest: '{{ terragrunt_ansible_work_path }}/terragrunt_linux'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Move Terragrunt binary'
+  ansible.builtin.copy:
+    src: '{{ terragrunt_ansible_work_path }}/terragrunt_linux'
+    dest: '/usr/local/bin/terragrunt'
+    mode: '0715'
+    force: true
+    remote_src: true

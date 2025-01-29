@@ -1,0 +1,3 @@
+terragrunt_ansible_work_path: '{{ ansible_work_path }}/terragrunt'
+
+terragrunt_github_repository: 'gruntwork-io/terragrunt'

@@ -37,6 +37,7 @@
     - role: 'shell'
     - role: 'ssh'
     - role: 'terraform'
+    - role: 'terragrunt'
     - role: 'tmux'
     - role: 'vagrant'
     - role: 'vim'
