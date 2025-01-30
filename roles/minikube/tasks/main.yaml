@@ -1,5 +1,5 @@
 ---
-- name: 'Create Minikube role work directory'
+- name: 'Create minikube role work directory'
   ansible.builtin.file:
     path: '{{ minikube_ansible_work_path }}'
     state: directory
@@ -7,15 +7,29 @@
     group: 'root'
     mode: '0775'
 
-- name: 'Download Minikube installer'
+- name: 'Set minikube release architecture'
+  ansible.builtin.set_fact:
+    minikube_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Get minikube latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ minikube_github_repository }}/releases/latest'
+    return_content: true
+  register: 'minikube_latest_release_version'
+
+- name: 'Set minikube latest release version'
+  ansible.builtin.set_fact:
+    minikube_version: '{{ minikube_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download minikube version v{{ minikube_version }}'
   ansible.builtin.get_url:
-    url: '{{ minikube_download_path }}'
-    dest: '{{ minikube_ansible_work_path }}/minikube-linux'
+    url: 'https://github.com/{{ minikube_github_repository }}/releases/download/v{{ minikube_version }}/minikube_{{ minikube_version }}-0_{{ minikube_release_architecture }}.deb'
+    dest: '{{ minikube_ansible_work_path }}/minikube_linux.deb'
     owner: 'root'
     group: 'root'
-    mode: '0715'
+    mode: '0660'
     force: true
 
-- name: 'Install Minikube'
-  ansible.builtin.shell:
-    cmd: 'install {{ minikube_ansible_work_path }}/minikube-linux /usr/local/bin/minikube'
+- name: 'Install minikube'
+  ansible.builtin.apt:
+    deb: '{{ minikube_ansible_work_path }}/minikube_linux.deb'

@@ -1,1 +1,3 @@
 minikube_ansible_work_path: '{{ ansible_work_path }}/minikube'
+
+minikube_github_repository: 'kubernetes/minikube'
