@@ -11,11 +11,15 @@
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ joplin_github_repository }}/releases/latest'
     return_content: true
-  register: 'joplin_version'
+  register: 'joplin_latest_release_version'
 
-- name: 'Download Joplin latest release'
+- name: 'Set Joplin latest release version'
+  ansible.builtin.set_fact:
+    joplin_version: '{{ joplin_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Joplin version v{{ joplin_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ joplin_github_repository }}/releases/download/{{ joplin_version.json.tag_name }}/Joplin-{{ joplin_version.json.tag_name | replace("v", "") }}.AppImage'
+    url: 'https://github.com/{{ joplin_github_repository }}/releases/download/v{{ joplin_version }}/Joplin-{{ joplin_version }}.AppImage'
     dest: '{{ joplin_ansible_work_path }}/Joplin.AppImage'
     owner: 'root'
     group: 'root'
