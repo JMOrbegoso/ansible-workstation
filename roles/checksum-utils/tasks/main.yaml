@@ -7,11 +7,15 @@
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ checksum_utils_github_repository }}/releases/latest'
     return_content: true
-  register: 'checksum_utils_version'
+  register: 'checksum_utils_latest_release_version'
 
-- name: 'Download checksum-utils latest release'
+- name: 'Set checksum-utils latest release version'
+  ansible.builtin.set_fact:
+    checksum_utils_version: '{{ checksum_utils_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download checksum-utils version v{{ checksum_utils_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ checksum_utils_github_repository }}/releases/download/{{ checksum_utils_version.json.tag_name }}/checksum-utils_linux-{{ checksum_utils_release_architecture }}'
+    url: 'https://github.com/{{ checksum_utils_github_repository }}/releases/download/v{{ checksum_utils_version }}/checksum-utils_linux-{{ checksum_utils_release_architecture }}'
     dest: '/usr/local/bin/checksum-utils'
     owner: 'root'
     group: 'root'
