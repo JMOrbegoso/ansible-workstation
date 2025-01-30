@@ -7,15 +7,23 @@
     group: 'root'
     mode: '0775'
 
+- name: 'Set Zen Browser release architecture'
+  ansible.builtin.set_fact:
+    zen_release_architecture: '{% if ansible_architecture == "arm64" %}aarch64{% elif ansible_architecture == "x86_64" %}x86_64{% else %}{{ ansible_architecture }}{% endif %}'
+
 - name: 'Get Zen Browser latest release version'
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ zen_github_repository }}/releases/latest'
     return_content: true
-  register: 'zen_version'
+  register: 'zen_latest_release_version'
 
-- name: 'Download Zen Browser latest release'
+- name: 'Set Zen Browser latest release version'
+  ansible.builtin.set_fact:
+    zen_version: '{{ zen_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Zen Browser version v{{ zen_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ zen_github_repository }}/releases/download/{{ zen_version.json.tag_name }}/zen-x86_64.AppImage'
+    url: 'https://github.com/{{ zen_github_repository }}/releases/download/{{ zen_version }}/zen-{{ zen_release_architecture }}.AppImage'
     dest: '{{ zen_ansible_work_path }}/Zen.AppImage'
     owner: 'root'
     group: 'root'
