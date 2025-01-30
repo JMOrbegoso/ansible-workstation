@@ -15,11 +15,15 @@
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ terragrunt_github_repository }}/releases/latest'
     return_content: true
-  register: 'terragrunt_version'
+  register: 'terragrunt_latest_release_version'
 
-- name: 'Download Terragrunt latest release'
+- name: 'Set Terragrunt latest release version'
+  ansible.builtin.set_fact:
+    terragrunt_version: '{{ terragrunt_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Terragrunt version v{{ terragrunt_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ terragrunt_github_repository }}/releases/download/{{ terragrunt_version.json.tag_name }}/terragrunt_linux_{{ terragrunt_release_architecture }}'
+    url: 'https://github.com/{{ terragrunt_github_repository }}/releases/download/v{{ terragrunt_version }}/terragrunt_linux_{{ terragrunt_release_architecture }}'
     dest: '{{ terragrunt_ansible_work_path }}/terragrunt_linux'
     owner: 'root'
     group: 'root'
