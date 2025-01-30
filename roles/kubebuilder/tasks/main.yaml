@@ -7,16 +7,24 @@
     group: 'root'
     mode: '0775'
 
+- name: 'Set Kubebuilder release architecture'
+  ansible.builtin.set_fact:
+    kubebuilder_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
 - name: 'Get Kubebuilder latest release version'
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ kubebuilder_github_repository }}/releases/latest'
     return_content: true
-  register: 'kubebuilder_version'
+  register: 'kubebuilder_latest_release_version'
 
-- name: 'Download Kubebuilder latest release'
+- name: 'Set Kubebuilder latest release version'
+  ansible.builtin.set_fact:
+    kubebuilder_version: '{{ kubebuilder_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Kubebuilder version v{{ kubebuilder_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ kubebuilder_github_repository }}/releases/download/{{ kubebuilder_version.json.tag_name }}/kubebuilder_linux_amd64'
-    dest: '{{ kubebuilder_ansible_work_path }}/kubebuilder_linux_amd64'
+    url: 'https://github.com/{{ kubebuilder_github_repository }}/releases/download/v{{ kubebuilder_version }}/kubebuilder_linux_{{ kubebuilder_release_architecture }}'
+    dest: '{{ kubebuilder_ansible_work_path }}/kubebuilder_linux'
     owner: 'root'
     group: 'root'
     mode: '0660'
@@ -24,7 +32,7 @@
 
 - name: 'Move Kubebuilder binary'
   ansible.builtin.copy:
-    src: '{{ kubebuilder_ansible_work_path }}/kubebuilder_linux_amd64'
+    src: '{{ kubebuilder_ansible_work_path }}/kubebuilder_linux'
     dest: '/usr/local/bin/kubebuilder'
     mode: '0715'
     force: true
