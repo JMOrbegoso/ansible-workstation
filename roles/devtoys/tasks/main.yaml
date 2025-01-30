@@ -1,14 +1,4 @@
 ---
-- name: 'Get DevToys latest release version'
-  ansible.builtin.uri:
-    url: 'https://api.github.com/repos/{{ devtoys_github_repository }}/releases'
-    return_content: true
-  register: 'devtoys_releases'
-
-- name: 'Get the first DevToys prerelease tag_name'
-  set_fact:
-    devtoys_version: "{{ (devtoys_releases.content | from_json | json_query('[?prerelease == `true`].tag_name'))[0] }}"
-
 - name: 'Create DevToys role work directory'
   ansible.builtin.file:
     path: '{{ devtoys_ansible_work_path }}'
@@ -17,13 +7,33 @@
     group: 'root'
     mode: '0775'
 
-- name: 'Download DevToys latest release'
+- name: 'Set DevToys release architecture'
+  ansible.builtin.set_fact:
+    devtoys_release_architecture: '{% if ansible_architecture == "arm64" %}arm{% elif ansible_architecture == "x86_64" %}x64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Get DevToys latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ devtoys_github_repository }}/releases'
+    return_content: true
+  register: 'devtoys_releases'
+
+- name: 'Get the first DevToys prerelease tag_name'
+  ansible.builtin.set_fact:
+    devtoys_latest_prerelease_version: "{{ (devtoys_releases.content | from_json | json_query('[?prerelease == `true`].tag_name'))[0] }}"
+
+- name: 'Set DevToys latest release version'
+  ansible.builtin.set_fact:
+    devtoys_version: '{{ devtoys_latest_prerelease_version | replace("v", "") }}'
+
+- name: 'Download DevToys version v{{ devtoys_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ devtoys_github_repository }}/releases/download/{{ devtoys_version }}/devtoys_linux_x64.deb'
-    dest: '{{ devtoys_ansible_work_path }}/devtoys_x64.deb'
+    url: 'https://github.com/{{ devtoys_github_repository }}/releases/download/v{{ devtoys_version }}/devtoys_linux_{{ devtoys_release_architecture }}.deb'
+    dest: '{{ devtoys_ansible_work_path }}/devtoys.deb'
+    owner: 'root'
+    group: 'root'
     mode: '0660'
     force: true
 
 - name: 'Install DevToys'
   ansible.builtin.apt:
-    deb: '{{ devtoys_ansible_work_path }}/devtoys_x64.deb'
+    deb: '{{ devtoys_ansible_work_path }}/devtoys.deb'
