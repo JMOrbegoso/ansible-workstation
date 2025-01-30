@@ -7,16 +7,24 @@
     group: 'root'
     mode: '0775'
 
+- name: 'Set Helmfile release architecture'
+  ansible.builtin.set_fact:
+    helmfile_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
 - name: 'Get Helmfile latest release version'
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ helmfile_github_repository }}/releases/latest'
     return_content: true
-  register: 'helmfile_version'
+  register: 'helmfile_latest_release_version'
 
-- name: 'Download Helmfile latest release'
+- name: 'Set Helmfile latest release version'
+  ansible.builtin.set_fact:
+    helmfile_version: '{{ helmfile_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Helmfile version v{{ helmfile_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ helmfile_github_repository }}/releases/download/{{ helmfile_version.json.tag_name }}/helmfile_{{ helmfile_version.json.tag_name | replace("v", "") }}_linux_amd64.tar.gz'
-    dest: '{{ helmfile_ansible_work_path }}/helmfile_amd64.tar.gz'
+    url: 'https://github.com/{{ helmfile_github_repository }}/releases/download/v{{ helmfile_version }}/helmfile_{{ helmfile_version }}_linux_{{ helmfile_release_architecture }}.tar.gz'
+    dest: '{{ helmfile_ansible_work_path }}/helmfile.tar.gz'
     owner: 'root'
     group: 'root'
     mode: '0660'
@@ -24,7 +32,7 @@
 
 - name: 'Extract Helmfile release tarball'
   ansible.builtin.unarchive:
-    src: '{{ helmfile_ansible_work_path }}/helmfile_amd64.tar.gz'
+    src: '{{ helmfile_ansible_work_path }}/helmfile.tar.gz'
     dest: '{{ helmfile_ansible_work_path }}'
     remote_src: true
 
