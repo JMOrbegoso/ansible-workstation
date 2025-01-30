@@ -1,10 +1,4 @@
 ---
-- name: 'Get HUGO latest release version'
-  ansible.builtin.uri:
-    url: 'https://api.github.com/repos/{{ hugo_github_repository }}/releases/latest'
-    return_content: true
-  register: 'hugo_version'
-
 - name: 'Create HUGO role work directory'
   ansible.builtin.file:
     path: '{{ hugo_ansible_work_path }}'
@@ -13,16 +7,30 @@
     group: 'root'
     mode: '0775'
 
-- name: 'Download HUGO latest release'
+- name: 'Set HUGO release architecture'
+  ansible.builtin.set_fact:
+    hugo_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Get HUGO latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ hugo_github_repository }}/releases/latest'
+    return_content: true
+  register: 'hugo_latest_release_version'
+
+- name: 'Set HUGO latest release version'
+  ansible.builtin.set_fact:
+    hugo_version: '{{ hugo_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download HUGO version v{{ hugo_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ hugo_github_repository }}/releases/download/{{ hugo_version.json.tag_name }}/hugo_extended_{{ hugo_version.json.tag_name | replace("v", "") }}_linux-amd64.tar.gz'
-    dest: '{{ hugo_ansible_work_path }}/hugo_extended_amd64.tar.gz'
+    url: 'https://github.com/{{ hugo_github_repository }}/releases/download/v{{ hugo_version }}/hugo_extended_{{ hugo_version }}_linux-{{ hugo_release_architecture }}.tar.gz'
+    dest: '{{ hugo_ansible_work_path }}/hugo_extended.tar.gz'
     mode: '0660'
     force: true
 
 - name: 'Extract HUGO release tarball'
   ansible.builtin.unarchive:
-    src: '{{ hugo_ansible_work_path }}/hugo_extended_amd64.tar.gz'
+    src: '{{ hugo_ansible_work_path }}/hugo_extended.tar.gz'
     dest: '{{ hugo_ansible_work_path }}'
     remote_src: true
 
