@@ -16,11 +16,15 @@
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ volta_github_repository }}/releases/latest'
     return_content: true
-  register: 'volta_version'
+  register: 'volta_latest_release_version'
 
-- name: 'Download latest Volta release'
+- name: 'Set Volta latest release version'
+  ansible.builtin.set_fact:
+    volta_version: '{{ volta_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Volta version v{{ volta_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ volta_github_repository }}/releases/download/{{ volta_version.json.tag_name }}/volta-{{ volta_version.json.tag_name | replace("v", "") }}-linux.tar.gz'
+    url: 'https://github.com/{{ volta_github_repository }}/releases/download/v{{ volta_version }}/volta-{{ volta_version }}-linux.tar.gz'
     dest: '{{ volta_ansible_work_path }}/volta-linux.tar.gz'
     owner: 'root'
     group: 'root'
