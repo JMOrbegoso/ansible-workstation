@@ -22,11 +22,15 @@
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ hack_nerd_font_github_repository }}/releases/latest'
     return_content: true
-  register: 'hack_nerd_font_version'
+  register: 'hack_nerd_font_latest_release_version'
 
-- name: 'Download Hack nerd font latest release'
+- name: 'Set Hack nerd font latest release version'
+  ansible.builtin.set_fact:
+    hack_nerd_font_version: '{{ hack_nerd_font_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Hack nerd font version v{{ hack_nerd_font_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ hack_nerd_font_github_repository }}/releases/download/{{ hack_nerd_font_version.json.tag_name }}/Hack.zip'
+    url: 'https://github.com/{{ hack_nerd_font_github_repository }}/releases/download/v{{ hack_nerd_font_version }}/Hack.zip'
     dest: '{{ hack_nerd_font_ansible_work_path }}/Hack.zip'
     owner: 'root'
     group: 'root'
