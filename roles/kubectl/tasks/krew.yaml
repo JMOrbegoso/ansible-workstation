@@ -1,20 +1,30 @@
 ---
+- name: 'Set Krew release architecture'
+  ansible.builtin.set_fact:
+    krew_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
 - name: 'Get Krew latest release version'
   ansible.builtin.uri:
     url: 'https://api.github.com/repos/{{ kubectl_krew_github_repository }}/releases/latest'
     return_content: true
-  register: 'kubectl_krew_version'
+  register: 'kubectl_krew_latest_release_version'
 
-- name: 'Download latest Krew release'
+- name: 'Set Krew latest release version'
+  ansible.builtin.set_fact:
+    kubectl_krew_version: '{{ kubectl_krew_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download Krew version v{{ kubectl_krew_version }}'
   ansible.builtin.get_url:
-    url: 'https://github.com/{{ kubectl_krew_github_repository }}/releases/download/{{ kubectl_krew_version.json.tag_name }}/krew-linux_amd64.tar.gz'
-    dest: '{{ kubectl_ansible_work_path }}/krew-linux_amd64.tar.gz'
+    url: 'https://github.com/{{ kubectl_krew_github_repository }}/releases/download/v{{ kubectl_krew_version }}/krew-linux_{{ krew_release_architecture }}.tar.gz'
+    dest: '{{ kubectl_ansible_work_path }}/krew-linux.tar.gz'
+    owner: 'root'
+    group: 'root'
     mode: '0660'
     force: true
 
 - name: 'Extract Krew release tarball'
   ansible.builtin.unarchive:
-    src: '{{ kubectl_ansible_work_path }}/krew-linux_amd64.tar.gz'
+    src: '{{ kubectl_ansible_work_path }}/krew-linux.tar.gz'
     dest: '{{ kubectl_ansible_work_path }}'
     owner: 'root'
     group: 'root'
@@ -23,6 +33,6 @@
 - name: 'Install Krew'
   become_user: '{{ kubectl_role_user.name }}'
   ansible.builtin.shell:
-    cmd: '{{ kubectl_ansible_work_path }}/krew-linux_amd64 install krew'
+    cmd: '{{ kubectl_ansible_work_path }}/krew-linux_{{ krew_release_architecture }} install krew'
   environment:
     KREW_ROOT: '{{ kubectl_role_user.home }}/.krew'
