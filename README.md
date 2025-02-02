@@ -34,10 +34,13 @@
 - Golang (Go lang support)
 - GParted (Disk partition manager)
 - Helm (Package manager for Kubernetes)
+- Helmfile (Wrapper tool around Helm)
 - Hugo (Static web site generator)
 - Joplin (Note-taking and organization tool)
+- Kubebuilder (Framework for building Kubernetes APIs)
 - Kubectl (Kubernetes command-line tool)
 - LibreWolf Web Browser (Privacy-focused web browser based on Firefox)
+- LightDM (Display manager)
 - Minikube (Local Kubernetes for testing)
 - MKVToolnix (MKV files editor)
 - OBS Studio (Streaming/Recording software)
@@ -45,12 +48,14 @@
 - Plexamp (Plex audio player)
 - Postman (API testing tool)
 - Raspberry Pi Imager (Format Raspberry Pi MicroSD cards)
+- Rust (Rust lang support & cargo package manager)
 - Shell tools:
   - ZSH
   - OhMyZSH
   - Powerlevel10K
 - Telegram (Messenger app)
 - Terraform (Infrastructure as code)
+- Terragrunt (OpenTofu/Terraform orchestration tool)
 - Tmux (Terminal multiplexer)
 - Ungoogled Chromium Web Browser (Google Chrome without Google)
 - Vagrant (Tool for building and managing virtualized environments)
@@ -60,6 +65,7 @@
 - Volta (Node.js versions manager)
 - VSCodium (VSCode without Microsoft)
 - Xfce4 ⚡ (FTW!)
+- YACReader (pdf reader)
 
 ## 📌 Requirements
 
@@ -169,8 +175,8 @@ This script has been tested on Debian 12 based desktops and laptops without a de
 
 - Website: [www.jmorbegoso.dev](https://www.jmorbegoso.dev)
 - Blog: [blog.jmorbegoso.dev](https://blog.jmorbegoso.dev)
-- Github: [@JMOrbegoso](https://github.com/JMOrbegoso/)
-- LinkedIn: [@jmorbegosodev](https://www.linkedin.com/in/jmorbegosodev/)
+- Github: [@JMOrbegoso](https://github.com/JMOrbegoso)
+- LinkedIn: [@jmorbegosodev](https://www.linkedin.com/in/jmorbegosodev)
 
 ## 🤝 Contributing
 
@@ -182,5 +188,5 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2024 [JMOrbegoso](https://github.com/JMOrbegoso).<br />
+Copyright © 2025 [JMOrbegoso](https://github.com/JMOrbegoso).<br />
 This project is [MIT](https://github.com/JMOrbegoso/ansible-workstation/blob/main/LICENSE) licensed.
