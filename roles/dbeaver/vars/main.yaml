@@ -1,1 +1,3 @@
-dbeaver_flathub_id: 'io.dbeaver.DBeaverCommunity'
+dbeaver_ansible_work_path: '{{ ansible_work_path }}/dbeaver'
+
+dbeaver_github_repository: 'dbeaver/dbeaver'

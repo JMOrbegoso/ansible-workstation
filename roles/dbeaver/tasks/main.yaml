@@ -1,5 +1,31 @@
 ---
+- name: 'Create DBeaver Community role work directory'
+  ansible.builtin.file:
+    path: '{{ dbeaver_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Get DBeaver Community latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ dbeaver_github_repository }}/releases/latest'
+    return_content: true
+  register: 'dbeaver_latest_release_version'
+
+- name: 'Set DBeaver Community latest release version'
+  ansible.builtin.set_fact:
+    dbeaver_version: '{{ dbeaver_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download DBeaver Community version v{{ dbeaver_version }}'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ dbeaver_github_repository }}/releases/download/{{ dbeaver_version }}/dbeaver-ce_{{ dbeaver_version }}_amd64.deb'
+    dest: '{{ dbeaver_ansible_work_path }}/dbeaver.deb'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
 - name: 'Install DBeaver Community'
-  community.general.flatpak:
-    name: '{{ dbeaver_flathub_id }}'
-    state: present
+  ansible.builtin.apt:
+    deb: '{{ dbeaver_ansible_work_path }}/dbeaver.deb'
