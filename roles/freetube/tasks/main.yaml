@@ -1,5 +1,39 @@
 ---
+- name: 'Create FreeTube role work directory'
+  ansible.builtin.file:
+    path: '{{ freetube_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Set FreeTube release architecture'
+  ansible.builtin.set_fact:
+    freetube_release_architecture: '{% if ansible_architecture == "arm64" %}arm64{% elif ansible_architecture == "x86_64" %}amd64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Get FreeTube latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ freetube_github_repository }}/releases'
+    return_content: true
+  register: 'freetube_releases'
+
+- name: 'Get the first FreeTube prerelease tag_name'
+  ansible.builtin.set_fact:
+    freetube_latest_prerelease_version: "{{ (freetube_releases.content | from_json | json_query('[?prerelease == `true`].tag_name'))[0] }}"
+
+- name: 'Set FreeTube latest release version'
+  ansible.builtin.set_fact:
+    freetube_version: '{{ freetube_latest_prerelease_version | replace("v", "") | replace("-beta", "") }}'
+
+- name: 'Download FreeTube version v{{ freetube_version }} (preview)'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ freetube_github_repository }}/releases/download/v{{ freetube_version }}-beta/freetube_{{ freetube_version }}_{{ freetube_release_architecture }}.deb'
+    dest: '{{ freetube_ansible_work_path }}/freetube.deb'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
 - name: 'Install FreeTube'
-  community.general.flatpak:
-    name: '{{ freetube_flathub_id }}'
-    state: present
+  ansible.builtin.apt:
+    deb: '{{ freetube_ansible_work_path }}/freetube.deb'

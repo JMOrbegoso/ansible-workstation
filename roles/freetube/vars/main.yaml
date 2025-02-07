@@ -1,1 +1,3 @@
-freetube_flathub_id: 'io.freetubeapp.FreeTube'
+freetube_ansible_work_path: '{{ ansible_work_path }}/freetube'
+
+freetube_github_repository: 'FreeTubeApp/FreeTube'
