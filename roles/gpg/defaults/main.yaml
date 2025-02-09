@@ -2,6 +2,13 @@ gpg_role_user_name: '{{ users.admin.name }}'
 
 gpg_packages:
   - 'gpg'
+  - 'gpg-agent'
+
+gpg_pinentry_packages:
+  - 'pinentry-tty'
+
+gpg_agent_conf_file_content: |
+  pinentry-program /usr/bin/pinentry-tty
 
 # This variable is sensitive, so it must be declared in an ansible-vault
 # Example:
