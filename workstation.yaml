@@ -70,6 +70,7 @@
     - role: 'plexamp'
     - role: 'postman'
     - role: 'raspberrypi-imager'
+    - role: 'rustdesk'
     - role: 'telegram'
     - role: 'ungoogled-chromium'
     - role: 'virtualbox'

@@ -49,6 +49,7 @@
 - Postman (API testing tool)
 - Raspberry Pi Imager (Format Raspberry Pi MicroSD cards)
 - Rust (Rust lang support & cargo package manager)
+- RustDesk (Remote access Software)
 - Shell tools:
   - ZSH
   - OhMyZSH

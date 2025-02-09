@@ -1,0 +1,3 @@
+rustdesk_ansible_work_path: '{{ ansible_work_path }}/rustdesk'
+
+rustdesk_github_repository: 'rustdesk/rustdesk'

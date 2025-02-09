@@ -1,0 +1,35 @@
+---
+- name: 'Create RustDesk role work directory'
+  ansible.builtin.file:
+    path: '{{ rustdesk_ansible_work_path }}'
+    state: directory
+    owner: 'root'
+    group: 'root'
+    mode: '0775'
+
+- name: 'Set RustDesk release architecture'
+  ansible.builtin.set_fact:
+    rustdesk_release_architecture: '{% if ansible_architecture == "arm64" %}aarch64{% elif ansible_architecture == "x86_64" %}x86_64{% else %}{{ ansible_architecture }}{% endif %}'
+
+- name: 'Get RustDesk latest release version'
+  ansible.builtin.uri:
+    url: 'https://api.github.com/repos/{{ rustdesk_github_repository }}/releases/latest'
+    return_content: true
+  register: 'rustdesk_latest_release_version'
+
+- name: 'Set RustDesk latest release version'
+  ansible.builtin.set_fact:
+    rustdesk_version: '{{ rustdesk_latest_release_version.json.tag_name | replace("v", "") }}'
+
+- name: 'Download RustDesk version v{{ rustdesk_version }}'
+  ansible.builtin.get_url:
+    url: 'https://github.com/{{ rustdesk_github_repository }}/releases/download/{{ rustdesk_version }}/rustdesk-{{ rustdesk_version }}-{{ rustdesk_release_architecture }}.deb'
+    dest: '{{ rustdesk_ansible_work_path }}/rustdesk_linux.deb'
+    owner: 'root'
+    group: 'root'
+    mode: '0660'
+    force: true
+
+- name: 'Install RustDesk'
+  ansible.builtin.apt:
+    deb: '{{ rustdesk_ansible_work_path }}/rustdesk_linux.deb'
