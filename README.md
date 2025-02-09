@@ -58,6 +58,7 @@
 - Terraform (Infrastructure as code)
 - Terragrunt (OpenTofu/Terraform orchestration tool)
 - Tmux (Terminal multiplexer)
+- Trivy (Vulnerabilities and misconfigurations finder in code repositories, container images and IaC)
 - Ungoogled Chromium Web Browser (Google Chrome without Google)
 - Vagrant (Tool for building and managing virtualized environments)
 - Vim (Command line text editor)

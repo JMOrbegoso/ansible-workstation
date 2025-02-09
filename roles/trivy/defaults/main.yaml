@@ -1,0 +1,6 @@
+trivy_apt_repository_signing_key: 'https://aquasecurity.github.io/trivy-repo/deb/public.key'
+trivy_apt_repository_url: 'https://aquasecurity.github.io/trivy-repo/deb'
+trivy_apt_repository_options: 'generic main'
+
+trivy_packages:
+  - 'trivy'

@@ -39,6 +39,7 @@
     - role: 'terraform'
     - role: 'terragrunt'
     - role: 'tmux'
+    - role: 'trivy'
     - role: 'vagrant'
     - role: 'vim'
     - role: 'volta'
