@@ -23,6 +23,8 @@ apt_install_base_packages:
   - 'python3'
   - 'software-properties-common'
 
+apt_install_linux_kernel_headers: true
+
 apt_install_packages:
   - 'fzf'
   - 'htop'

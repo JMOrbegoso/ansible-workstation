@@ -14,12 +14,13 @@
   loop_control:
     loop_var: 'package'
 
-- name: 'Install Kernel Linux Headers using APT'
+- name: 'Install Linux Kernel Headers using APT'
   ansible.builtin.include_tasks: 'install-apt-package.yaml'
   loop:
     - 'linux-headers-{{ ansible_kernel }}'
   loop_control:
     loop_var: 'package'
+  when: 'apt_install_linux_kernel_headers'
 
 - name: 'Add extrepo support'
   ansible.builtin.include_tasks: 'install-apt-package.yaml'
