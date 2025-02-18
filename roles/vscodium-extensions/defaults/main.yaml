@@ -1,0 +1,6 @@
+vscodium_extensions_role_user_name: '{{ users.admin.name }}'
+
+vscodium_extensions:
+  - 'esbenp.prettier-vscode'
+  - 'ms-python.black-formatter'
+  - 'pkief.material-icon-theme'

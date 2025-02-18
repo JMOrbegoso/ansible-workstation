@@ -1,0 +1,11 @@
+---
+- name: 'Get user info for VSCodium role'
+  register: 'vscodium_extensions_role_user'
+  ansible.builtin.user:
+    name: '{{ vscodium_extensions_role_user_name }}'
+
+- name: 'Install VSCodium extensions'
+  become_user: '{{ vscodium_extensions_role_user.name }}'
+  ansible.builtin.shell:
+    cmd: '/usr/bin/codium --install-extension {{ item }}'
+  loop: '{{ vscodium_extensions }}'
