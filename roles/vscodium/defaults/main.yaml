@@ -7,11 +7,6 @@ vscodium_apt_repository_options: 'vscodium main'
 vscodium_packages:
   - 'codium'
 
-vscodium_extensions:
-  - 'esbenp.prettier-vscode'
-  - 'ms-python.black-formatter'
-  - 'pkief.material-icon-theme'
-
 vscodium_keybindings_filename: 'keybindings.json'
 
 vscodium_settings_filename: 'settings.json'
