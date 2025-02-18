@@ -22,6 +22,7 @@ apt_install_base_packages:
   - 'libsecret-1-0'
   - 'python3'
   - 'software-properties-common'
+  - 'wget'
 
 apt_install_linux_kernel_headers: true
 
@@ -35,4 +36,3 @@ apt_install_packages:
   - 'rsyslog'
   - 'sshpass'
   - 'tree'
-  - 'xcvt'
