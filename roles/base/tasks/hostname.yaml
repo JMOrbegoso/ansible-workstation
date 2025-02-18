@@ -1,10 +1,13 @@
 ---
-- name: 'Configure hostname'
-  ansible.builtin.hostname:
-    name: '{{ hostname }}'
-
 - name: 'Configure the hostname in /etc/hosts'
   ansible.builtin.lineinfile:
     path: '/etc/hosts'
-    regexp: '^127.0.1.1'
-    line: "127.0.1.1\t{{ hostname }}"
+    regexp: '^127\.0\.1\.1'
+    line: '127.0.1.1\t{{ hostname }}'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: 'Configure hostname'
+  ansible.builtin.hostname:
+    name: '{{ hostname }}'
