@@ -1,5 +1,5 @@
 ---
 - name: 'Configure hostname in systemd using hostnamectl'
   ansible.builtin.hostname:
-    name: '{{ hostname }}'
+    name: '{{ base_hostname }}'
     use: 'systemd'

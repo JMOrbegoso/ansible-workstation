@@ -1,3 +1,3 @@
-hostname: 'WORKSTATION'
-locale: 'en_US'
-timezone: 'America/New_York'
+base_hostname: 'WORKSTATION'
+base_locale: 'en_US'
+base_timezone: 'America/New_York'

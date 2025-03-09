@@ -1,4 +1,4 @@
 ---
-- name: 'Configure timezone to {{ timezone }}'
+- name: 'Configure timezone to {{ base_timezone }}'
   community.general.timezone:
-    name: '{{ timezone }}'
+    name: '{{ base_timezone }}'

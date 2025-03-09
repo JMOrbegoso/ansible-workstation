@@ -1,4 +1,4 @@
-hostname: 'WORKSTATION'
+base_hostname: 'WORKSTATION'
 
 users:
   admin:

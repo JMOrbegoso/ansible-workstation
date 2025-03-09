@@ -1,4 +1,4 @@
 ansible_work_path: '/tmp/ansible'
 
-timezone: 'America/New_York'
-locale: 'en_US'
+base_timezone: 'America/New_York'
+base_locale: 'en_US'
